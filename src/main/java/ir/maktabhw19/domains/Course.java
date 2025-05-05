@@ -3,13 +3,15 @@ package ir.maktabhw19.domains;
 import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,8 +25,11 @@ public class Course extends BaseEntity<Long> {
     private LocalDate endDate;
 
     @ManyToMany
-    private List<Student> students;
+    private Set<Student> students;
 
-    @ManyToMany
-    private List<Teacher> teacher;
+    @ManyToOne
+    private Teacher teacher;
+
+    @OneToMany(mappedBy = "course")
+    private Set<Exam> exams;
 }

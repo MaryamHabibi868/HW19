@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -20,6 +21,6 @@ public class Student extends User{
     private RegistrationConfirmation registrationConfirmation;
 
     @ManyToMany
-    private List<Course> courses;
+    private Set<Course> courses;
 
 }

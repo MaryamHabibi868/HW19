@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,7 +20,10 @@ public class Teacher extends User{
     @Enumerated(EnumType.STRING)
     private RegistrationConfirmation registrationConfirmation;
 
-    @ManyToMany
-    private List<Course> courses;
+    @OneToMany (mappedBy = "teacher")
+    private Set<Course> courses;
+
+    @OneToMany (mappedBy = "teacher")
+    private Set<Question> questions;
 
 }

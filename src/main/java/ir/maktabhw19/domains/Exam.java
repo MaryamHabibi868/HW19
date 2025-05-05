@@ -3,12 +3,17 @@ package ir.maktabhw19.domains;
 import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -18,8 +23,14 @@ import java.util.List;
 public class Exam extends BaseEntity<Long> {
 
     private Double score;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
+    @ManyToOne
     private Course course;
 
-    private List<Question> questions;
+    @OneToMany
+    private Set<Question> questions;
+
+
 }
