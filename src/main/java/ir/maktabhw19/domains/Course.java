@@ -2,6 +2,7 @@ package ir.maktabhw19.domains;
 
 import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +22,9 @@ public class Course extends BaseEntity<Long> {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @ManyToMany
     private List<Student> students;
 
+    @ManyToMany
     private List<Teacher> teacher;
 }

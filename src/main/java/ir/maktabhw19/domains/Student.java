@@ -1,9 +1,6 @@
 package ir.maktabhw19.domains;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +19,7 @@ public class Student extends User{
     @Enumerated(EnumType.STRING)
     private RegistrationConfirmation registrationConfirmation;
 
+    @ManyToMany
     private List<Course> courses;
 
 }
