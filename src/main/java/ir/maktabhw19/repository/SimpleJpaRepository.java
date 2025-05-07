@@ -4,7 +4,6 @@ import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public abstract class SimpleJpaRepository<T extends BaseEntity<ID>, ID>
 
     public SimpleJpaRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
-        this.domainClass = domainClass;
     }
 
 
