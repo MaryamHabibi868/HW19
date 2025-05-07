@@ -13,7 +13,7 @@ public class ApplicationContext {
     }
 
     public static ApplicationContext getInstance(){
-        if(applicationContext == null){
+        if(Objects.isNull(applicationContext)){
             applicationContext = new ApplicationContext();
         }
         return applicationContext;

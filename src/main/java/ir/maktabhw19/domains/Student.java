@@ -18,7 +18,7 @@ import java.util.Set;
 public class Student extends User{
 
     @Enumerated(EnumType.STRING)
-    private RegistrationConfirmation registrationConfirmation;
+    private RegistrationConfirmation registrationConfirmation = RegistrationConfirmation.PENDING;
 
     @ManyToMany
     private Set<Course> courses;

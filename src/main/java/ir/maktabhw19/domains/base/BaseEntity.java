@@ -12,10 +12,6 @@ import lombok.Setter;
 public class BaseEntity <ID> {
 
     @Id
-    @SequenceGenerator(
-            name = "id_seq_gen",
-            allocationSize = 1
-    )
-    @GeneratedValue(strategy = GenerationType.IDENTITY , generator = "id_seq_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 }

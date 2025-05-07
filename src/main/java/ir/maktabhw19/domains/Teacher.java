@@ -18,7 +18,7 @@ import java.util.Set;
 public class Teacher extends User{
 
     @Enumerated(EnumType.STRING)
-    private RegistrationConfirmation registrationConfirmation;
+    private RegistrationConfirmation registrationConfirmation = RegistrationConfirmation.PENDING;
 
     @OneToMany (mappedBy = "teacher")
     private Set<Course> courses;
