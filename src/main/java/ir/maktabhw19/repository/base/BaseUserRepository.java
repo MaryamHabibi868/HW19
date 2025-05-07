@@ -1,4 +1,4 @@
-package ir.maktabhw19.repository;
+package ir.maktabhw19.repository.base;
 
 import ir.maktabhw19.domains.User;
 

@@ -1,4 +1,4 @@
-package ir.maktabhw19.repository;
+package ir.maktabhw19.repository.base;
 
 import ir.maktabhw19.domains.User;
 import jakarta.persistence.EntityManager;
@@ -6,7 +6,6 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
-import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseUserRepositoryImpl<T extends User>
