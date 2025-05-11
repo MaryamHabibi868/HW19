@@ -1,5 +1,7 @@
 package ir.maktabhw19.config;
 
+import ir.maktabhw19.repository.StudentRepository;
+import ir.maktabhw19.repository.StudentRepositoryImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -35,5 +37,14 @@ public class ApplicationContext {
             entityManager = getEntityManagerFactory().createEntityManager();
         }
         return entityManager;
+    }
+
+    private StudentRepository studentRepository;
+
+    public StudentRepository getStudentRepository() {
+        if(Objects.isNull(studentRepository)){
+            studentRepository = new StudentRepositoryImpl(getEntityManager());
+        }
+        return studentRepository;
     }
 }

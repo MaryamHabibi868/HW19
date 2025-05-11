@@ -4,7 +4,8 @@ import ir.maktabhw19.domains.User;
 
 import java.util.Optional;
 
-public interface BaseUserRepository<T extends User> extends CrudRepository<T , Long> {
+public interface BaseUserRepository<T extends User> extends
+        CrudRepository<T , Long> {
 
     Optional<T> findByUsername(String username);
 
