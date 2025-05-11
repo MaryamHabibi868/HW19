@@ -1,10 +1,7 @@
 package ir.maktabhw19.domains;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +9,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString (callSuper = true)
 @PrimaryKeyJoinColumn (name = "student_id")
 public class Student extends User{
