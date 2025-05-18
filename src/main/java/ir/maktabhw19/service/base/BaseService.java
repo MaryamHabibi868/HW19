@@ -6,8 +6,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public interface BaseUserService
-        <T extends BaseEntity<ID> , ID > {
+public interface BaseService
+        <T extends BaseEntity<ID> , ID>
+{
     T save(T entity);
     List<T> saveAll(Collection<T> entities);
     Optional<T> findById(ID id);

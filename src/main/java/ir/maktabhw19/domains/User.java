@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
@@ -18,9 +19,16 @@ import lombok.*;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends BaseEntity<Long> {
 
+    @NotBlank(message = "First Name should be entered")
     private String firstName;
+
+    @NotBlank(message = "Last Name should be entered")
     private String lastName;
+
+    @NotBlank(message = "User Name should be entered")
     private String userName;
+
+    @NotBlank(message = "Password should be entered")
     private String password;
 
 }

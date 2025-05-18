@@ -4,6 +4,7 @@ import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 
@@ -20,7 +21,11 @@ import java.util.Set;
 public class Exam extends BaseEntity<Long> {
 
     private Double score;
+
+    @NotBlank (message = "Start Date of Exam should be entered")
     private LocalDateTime startDate;
+
+    @NotBlank (message = "End date of Exam should be entered")
     private LocalDateTime endDate;
 
     @ManyToOne
