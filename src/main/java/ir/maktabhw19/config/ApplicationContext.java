@@ -1,7 +1,9 @@
 package ir.maktabhw19.config;
 
-import ir.maktabhw19.repository.StudentRepository;
-import ir.maktabhw19.repository.StudentRepositoryImpl;
+import ir.maktabhw19.domains.Manager;
+import ir.maktabhw19.domains.Teacher;
+import ir.maktabhw19.repository.*;
+import ir.maktabhw19.service.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -46,5 +48,52 @@ public class ApplicationContext {
             studentRepository = new StudentRepositoryImpl(getEntityManager());
         }
         return studentRepository;
+    }
+
+    private ManagerRepository managerRepository;
+
+    public ManagerRepository getManagerRepository() {
+        if(Objects.isNull(managerRepository)){
+            managerRepository = new ManagerRepositoryImpl(getEntityManager());
+        }
+        return managerRepository;
+    }
+
+    private TeacherRepository teacherRepository;
+
+    public TeacherRepository getTeacherRepository() {
+        if(Objects.isNull(teacherRepository)){
+            teacherRepository = new TeacherRepositoryImpl(getEntityManager());
+        }
+        return teacherRepository;
+    }
+
+    private ManagerService managerService;
+
+    public ManagerService getManagerService() {
+        if(Objects.isNull(managerService)){
+            managerService = new ManagerServiceImpl(getManagerRepository(),
+                    getTeacherService(),
+                    getStudentService());
+        }
+        return managerService;
+    }
+
+    private StudentService studentService;
+
+    public StudentService getStudentService() {
+        if(Objects.isNull(studentService)){
+            studentService = new StudentServiceImpl(getStudentRepository());
+        }
+        return studentService;
+    }
+
+    private TeacherService teacherService;
+
+    public TeacherService getTeacherService() {
+        if(Objects.isNull(teacherService)){
+            teacherService = new TeacherServiceImpl(getTeacherRepository());
+        }
+        return teacherService;
     }
 }
