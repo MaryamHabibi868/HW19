@@ -8,6 +8,7 @@ import ir.maktabhw19.repository.ManagerRepository;
 import ir.maktabhw19.repository.TeacherRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
+import java.util.List;
 import java.util.Optional;
 
 public class ManagerServiceImpl
@@ -83,5 +84,13 @@ public class ManagerServiceImpl
             }
 
         }
+    }
+
+    public List<Student> printAllStudent(){
+       return studentService.findAll();
+    }
+
+    public List<Teacher> printAllTeacher(){
+        return teacherService.findAll();
     }
 }
