@@ -40,4 +40,20 @@ public class StudentServiceImpl
         System.out.println("Your registration is pending. " +
                 "Manager should approve your registration ");
     }
+
+    public void loginStudent(String username, String password) {
+        repository.beginTransaction();
+        Student student = new Student();
+        Optional<Student> foundStudent = repository.findByUsername(username);
+        if (foundStudent.isPresent()) {
+            if (foundStudent.get().getPassword().equals(password)) {
+                System.out.println("Student logged in successfully");
+            } else {
+                System.out.println("Wrong password");
+            }
+        }
+        else {
+            System.out.println("userName not found");
+        }
+    }
 }

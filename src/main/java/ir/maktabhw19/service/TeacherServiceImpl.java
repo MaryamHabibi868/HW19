@@ -39,4 +39,20 @@ public class TeacherServiceImpl
         System.out.println("Your registration is pending. " +
                 "Manager should approve your registration ");
     }
+
+    public void loginTeacher(String username, String password) {
+        repository.beginTransaction();
+        Teacher teacher = new Teacher();
+        Optional<Teacher> foundTeacher = repository.findByUsername(username);
+        if (foundTeacher.isPresent()) {
+            if (foundTeacher.get().getPassword().equals(password)) {
+                System.out.println("Student logged in successfully");
+            } else {
+                System.out.println("Wrong password");
+            }
+        }
+        else {
+            System.out.println("userName not found");
+        }
+    }
 }
