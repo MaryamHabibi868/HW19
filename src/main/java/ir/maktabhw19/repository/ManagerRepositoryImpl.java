@@ -10,7 +10,7 @@ public class ManagerRepositoryImpl
         extends BaseUserRepositoryImpl<Manager>
         implements ManagerRepository{
 
-    protected ManagerRepositoryImpl(EntityManager entityManager) {
+    public ManagerRepositoryImpl(EntityManager entityManager) {
         super(entityManager);
     }
 

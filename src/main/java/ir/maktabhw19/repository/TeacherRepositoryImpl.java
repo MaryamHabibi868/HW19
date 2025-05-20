@@ -9,7 +9,7 @@ public class TeacherRepositoryImpl
         extends BaseUserRepositoryImpl<Teacher>
         implements TeacherRepository {
 
-    protected TeacherRepositoryImpl(EntityManager entityManager) {
+    public TeacherRepositoryImpl(EntityManager entityManager) {
         super(entityManager);
     }
 
