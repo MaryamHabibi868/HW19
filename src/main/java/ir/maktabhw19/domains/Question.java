@@ -3,13 +3,14 @@ package ir.maktabhw19.domains;
 import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "question_type")

@@ -2,16 +2,15 @@ package ir.maktabhw19.domains;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
+import lombok.experimental.SuperBuilder;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString (callSuper = true)
 @PrimaryKeyJoinColumn (name = "student_id")
 public class Student extends User{

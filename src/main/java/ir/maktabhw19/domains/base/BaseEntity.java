@@ -2,13 +2,14 @@ package ir.maktabhw19.domains.base;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @MappedSuperclass
 public class BaseEntity <ID> {
 

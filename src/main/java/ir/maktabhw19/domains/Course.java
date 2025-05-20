@@ -7,16 +7,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString(callSuper = true)
 public class Course extends BaseEntity<Long> {
 

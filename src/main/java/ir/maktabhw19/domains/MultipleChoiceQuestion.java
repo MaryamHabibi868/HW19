@@ -4,7 +4,7 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import lombok.*;
-
+import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +12,9 @@ import java.util.List;
 @DiscriminatorValue("MCQ")
 @Getter
 @Setter
-@NoArgsConstructor
+@SuperBuilder
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @ToString(callSuper = true)
 public class MultipleChoiceQuestion extends Question {
 

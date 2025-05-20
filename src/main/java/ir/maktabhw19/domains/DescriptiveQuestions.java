@@ -3,14 +3,17 @@ package ir.maktabhw19.domains;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @DiscriminatorValue("DQ")
 @Getter
 @Setter
-@NoArgsConstructor
+@SuperBuilder
+/*
 @AllArgsConstructor
-@Builder
+*/
+@NoArgsConstructor
 @ToString(callSuper = true)
 public class DescriptiveQuestions extends Question {
 }
