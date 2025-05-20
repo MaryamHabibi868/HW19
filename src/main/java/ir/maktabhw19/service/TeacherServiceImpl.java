@@ -1,9 +1,12 @@
 package ir.maktabhw19.service;
 
+import ir.maktabhw19.domains.RegistrationConfirmation;
 import ir.maktabhw19.domains.Student;
 import ir.maktabhw19.domains.Teacher;
 import ir.maktabhw19.repository.TeacherRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
+
+import java.util.Optional;
 
 public class TeacherServiceImpl
         extends BaseServiceImpl<Teacher, Long, TeacherRepository>
@@ -13,6 +16,15 @@ public class TeacherServiceImpl
         super(repository);
     }
 
+    @Override
+    public Optional<Teacher> findTeacherByUserName(String userName) {
+        if (repository.findByUsername(userName).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        return repository.findByUsername(userName);
+    }
+
+
     public void registerTeacher(String firstName, String lastName,
                                 String userName, String password) {
         repository.beginTransaction();
@@ -21,8 +33,10 @@ public class TeacherServiceImpl
         teacher.setLastName(lastName);
         teacher.setUserName(userName);
         teacher.setPassword(password);
+        teacher.setRegistrationConfirmation(RegistrationConfirmation.PENDING);
         repository.save(teacher);
         repository.commitTransaction();
-        System.out.println("Teacher registered successfully");
+        System.out.println("Your registration is pending. " +
+                "Manager should approve your registration ");
     }
 }
