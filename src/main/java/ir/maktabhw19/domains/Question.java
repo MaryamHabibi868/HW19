@@ -1,10 +1,7 @@
 package ir.maktabhw19.domains;
 
 import ir.maktabhw19.domains.base.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,12 +11,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "question_type")
 public class Question extends BaseEntity <Long> {
 
-    private Double defaultScore;
+    private String questionTitle;
 
-    @Enumerated (EnumType.STRING)
-    private TypesOfExamQuestions typeQuestion;
+    private String questionStatement;
+
+    private Double defaultScore;
 
     @ManyToOne
     private Exam exam;
