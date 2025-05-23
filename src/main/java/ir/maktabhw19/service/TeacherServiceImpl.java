@@ -1,20 +1,25 @@
 package ir.maktabhw19.service;
 
+import ir.maktabhw19.domains.Exam;
 import ir.maktabhw19.domains.RegistrationConfirmation;
 import ir.maktabhw19.domains.Student;
 import ir.maktabhw19.domains.Teacher;
 import ir.maktabhw19.repository.TeacherRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class TeacherServiceImpl
         extends BaseServiceImpl<Teacher, Long, TeacherRepository>
         implements TeacherService{
 
-    public TeacherServiceImpl(TeacherRepository repository) {
+    public TeacherServiceImpl(TeacherRepository repository, ExamService examService) {
         super(repository);
+        this.examService = examService;
     }
+
+    private final ExamService examService;
 
     @Override
     public Optional<Teacher> findTeacherByUserName(String userName) {
@@ -54,5 +59,18 @@ public class TeacherServiceImpl
         else {
             System.out.println("userName not found");
         }
+    }
+
+    public void addExamByTeacher(Long teacherId, LocalDateTime startDate,
+                                 LocalDateTime endDate) {
+        repository.beginTransaction();
+       if(repository.findById(teacherId).isEmpty()){
+           throw new RuntimeException("Teacher not found");
+       }
+       Exam exam = new Exam();
+       exam.setStartDate(startDate);
+       exam.setEndDate(endDate);
+       examService.save(exam);
+       repository.commitTransaction();
     }
 }
