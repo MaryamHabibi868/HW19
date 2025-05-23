@@ -77,6 +77,15 @@ public class ApplicationContext {
         return courseRepository;
     }
 
+    private ExamRepository examRepository;
+
+    public ExamRepository getExamRepository() {
+        if(Objects.isNull(examRepository)){
+            examRepository = new ExamRepositoryImpl(getEntityManager());
+        }
+        return examRepository;
+    }
+
     private ManagerService managerService;
 
     public ManagerService getManagerService() {
@@ -102,7 +111,8 @@ public class ApplicationContext {
 
     public TeacherService getTeacherService() {
         if(Objects.isNull(teacherService)){
-            teacherService = new TeacherServiceImpl(getTeacherRepository());
+            teacherService = new TeacherServiceImpl(getTeacherRepository(),
+                    getExamService());
         }
         return teacherService;
     }
@@ -114,5 +124,14 @@ public class ApplicationContext {
             courseService = new CourseServiceImpl(getCourseRepository());
         }
         return courseService;
+    }
+
+    private ExamService examService;
+
+    public ExamService getExamService() {
+        if(Objects.isNull(examService)){
+            examService = new ExamServiceImpl(getExamRepository());
+        }
+        return examService;
     }
 }
