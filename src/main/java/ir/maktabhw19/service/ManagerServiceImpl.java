@@ -49,6 +49,7 @@ public class ManagerServiceImpl
         if (foundManager.isPresent()) {
             if (foundManager.get().getPassword().equals(password)) {
                 System.out.println("Manager logged in successfully");
+                repository.commitTransaction();
             } else {
                 System.out.println("Wrong password");
             }
@@ -64,6 +65,8 @@ public class ManagerServiceImpl
             Teacher teacher = foundTeacher.get();
             if (teacher.getRegistrationConfirmation() == RegistrationConfirmation.PENDING) {
                 teacher.setRegistrationConfirmation(RegistrationConfirmation.APPROVED);
+                teacherService.save(teacher);
+                repository.commitTransaction();
                 System.out.println("Teacher registration APPROVED by manager successfully");
             } else {
                 System.out.println("Teacher registration has already been approved");
@@ -78,6 +81,8 @@ public class ManagerServiceImpl
             Student student = foundStudent.get();
             if (student.getRegistrationConfirmation() == RegistrationConfirmation.PENDING) {
                 student.setRegistrationConfirmation(RegistrationConfirmation.APPROVED);
+                studentService.save(student);
+                repository.commitTransaction();
                 System.out.println("Student registration APPROVED by manager successfully");
             } else {
                 System.out.println("Student registration has already been approved");
@@ -106,8 +111,41 @@ public class ManagerServiceImpl
             course.setTitle(title);
             course.setStartDate(startDate);
             course.setEndDate(endDate);
+            courseService.save(course);
             System.out.println("Course" + title + " added successfully");
         }
         repository.commitTransaction();
     }
-}
+
+    public void addTeacherToCourse(Long courseId, Long teacherId) {
+        repository.beginTransaction();
+       if (courseService.findById(courseId).isEmpty()) {
+           throw new RuntimeException("CourseId " + courseId + " not found");
+       }
+       if (teacherService.findById(teacherId).isEmpty()) {
+           throw new RuntimeException("TeacherId " + teacherId + " not found");
+       }
+           Course course = courseService.findById(courseId).get();
+           course.setTeacher(teacherService.findById(teacherId).get());
+           courseService.save(course);
+           teacherService.save(teacherService.findById(teacherId).get());
+           repository.commitTransaction();
+        System.out.println("Teacher added to this course " + courseId + " successfully");
+       }
+
+       public void addStudentToCourse(Long studentId, Long courseId) {
+        repository.beginTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("CourseId " + courseId + " not found");
+        }
+        if (studentService.findById(studentId).isEmpty()) {
+            throw new RuntimeException("StudentId " + studentId + " not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        course.getStudents().add(studentService.findById(studentId).get());
+        courseService.save(course);
+        studentService.save(studentService.findById(studentId).get());
+        repository.commitTransaction();
+        System.out.println("Student added to this course " + courseId + " successfully");
+       }
+    }
