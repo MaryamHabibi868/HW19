@@ -1,7 +1,5 @@
 package ir.maktabhw19.config;
 
-import ir.maktabhw19.domains.Manager;
-import ir.maktabhw19.domains.Teacher;
 import ir.maktabhw19.repository.*;
 import ir.maktabhw19.service.*;
 import jakarta.persistence.EntityManager;
@@ -95,14 +93,14 @@ public class ApplicationContext {
         return questionRepository;
     }
 
-    private DescriptiveQuestionsRepository descriptiveQuestionsRepository;
+    private DescriptiveQuestionRepository descriptiveQuestionRepository;
 
-    public DescriptiveQuestionsRepository getDescriptiveQuestionsRepository() {
-        if(Objects.isNull(descriptiveQuestionsRepository)){
-            descriptiveQuestionsRepository =
-                    new DescriptiveQuestionsRepositoryImpl(getEntityManager());
+    public DescriptiveQuestionRepository getDescriptiveQuestionsRepository() {
+        if(Objects.isNull(descriptiveQuestionRepository)){
+            descriptiveQuestionRepository =
+                    new DescriptiveQuestionRepositoryImpl(getEntityManager());
         }
-        return descriptiveQuestionsRepository;
+        return descriptiveQuestionRepository;
     }
 
     private MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
@@ -176,14 +174,14 @@ public class ApplicationContext {
         return questionService;
     }
 
-    private DescriptiveQuestionsService descriptiveQuestionsService;
+    private DescriptiveQuestionService descriptiveQuestionService;
 
-    public DescriptiveQuestionsService getDescriptiveQuestionsService() {
-        if(Objects.isNull(descriptiveQuestionsService)){
-            descriptiveQuestionsService =
-                    new DescriptiveQuestionsServiceImpl(getDescriptiveQuestionsRepository());
+    public DescriptiveQuestionService getDescriptiveQuestionsService() {
+        if(Objects.isNull(descriptiveQuestionService)){
+            descriptiveQuestionService =
+                    new DescriptiveQuestionServiceImpl(getDescriptiveQuestionsRepository());
         }
-        return descriptiveQuestionsService;
+        return descriptiveQuestionService;
     }
 
     private MultipleChoiceQuestionService multipleChoiceQuestionService;

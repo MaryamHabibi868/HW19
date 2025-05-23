@@ -15,5 +15,5 @@ import lombok.experimental.SuperBuilder;
 */
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class DescriptiveQuestions extends Question {
+public class DescriptiveQuestion extends Question {
 }
