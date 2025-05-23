@@ -1,13 +1,11 @@
 package ir.maktabhw19.service;
 
-import ir.maktabhw19.domains.Manager;
-import ir.maktabhw19.domains.RegistrationConfirmation;
-import ir.maktabhw19.domains.Student;
-import ir.maktabhw19.domains.Teacher;
+import ir.maktabhw19.domains.*;
 import ir.maktabhw19.repository.ManagerRepository;
 import ir.maktabhw19.repository.TeacherRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,15 +15,18 @@ public class ManagerServiceImpl
 
     public ManagerServiceImpl(ManagerRepository repository,
                               TeacherService teacherService,
-                              StudentService studentService) {
+                              StudentService studentService,
+                              CourseService courseService) {
         super(repository);
         this.teacherService = teacherService;
         this.studentService = studentService;
+        this.courseService = courseService;
     }
 
 
     private final TeacherService teacherService;
     private final StudentService studentService;
+    private final CourseService courseService;
 
 
     public void registerManager(String firstName, String lastName,
@@ -51,13 +52,12 @@ public class ManagerServiceImpl
             } else {
                 System.out.println("Wrong password");
             }
-        }
-        else {
+        } else {
             System.out.println("userName not found");
         }
     }
 
-    public void  proofRegisteredTeacher(String userName) {
+    public void proofRegisteredTeacher(String userName) {
         repository.beginTransaction();
         Optional<Teacher> foundTeacher = teacherService.findTeacherByUserName(userName);
         if (foundTeacher.isPresent()) {
@@ -71,7 +71,7 @@ public class ManagerServiceImpl
         }
     }
 
-    public void  proofRegisteredStudent(String userName) {
+    public void proofRegisteredStudent(String userName) {
         repository.beginTransaction();
         Optional<Student> foundStudent = studentService.findStudentByUserName(userName);
         if (foundStudent.isPresent()) {
@@ -86,11 +86,28 @@ public class ManagerServiceImpl
         }
     }
 
-    public List<Student> printAllStudent(){
-       return studentService.findAll();
+    public List<Student> printAllStudent() {
+        return studentService.findAll();
     }
 
-    public List<Teacher> printAllTeacher(){
+    public List<Teacher> printAllTeacher() {
         return teacherService.findAll();
+    }
+
+    public void addCourse(String title, LocalDate startDate, LocalDate endDate) {
+        repository.beginTransaction();
+        if (courseService.findByTitle(title).isPresent()) {
+            courseService.findByTitle(title).get().setStartDate(startDate);
+            courseService.findByTitle(title).get().setEndDate(endDate);
+            courseService.save(courseService.findByTitle(title).get());
+            System.out.println("Course edited successfully");
+        } else {
+            Course course = new Course();
+            course.setTitle(title);
+            course.setStartDate(startDate);
+            course.setEndDate(endDate);
+            System.out.println("Course" + title + " added successfully");
+        }
+        repository.commitTransaction();
     }
 }
