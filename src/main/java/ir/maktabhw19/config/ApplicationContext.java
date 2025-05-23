@@ -86,6 +86,35 @@ public class ApplicationContext {
         return examRepository;
     }
 
+    private QuestionRepository questionRepository;
+
+    public QuestionRepository getQuestionRepository() {
+        if(Objects.isNull(questionRepository)){
+            questionRepository = new QuestionRepositoryImpl(getEntityManager());
+        }
+        return questionRepository;
+    }
+
+    private DescriptiveQuestionsRepository descriptiveQuestionsRepository;
+
+    public DescriptiveQuestionsRepository getDescriptiveQuestionsRepository() {
+        if(Objects.isNull(descriptiveQuestionsRepository)){
+            descriptiveQuestionsRepository =
+                    new DescriptiveQuestionsRepositoryImpl(getEntityManager());
+        }
+        return descriptiveQuestionsRepository;
+    }
+
+    private MultipleChoiceQuestionRepository multipleChoiceQuestionRepository;
+
+    public MultipleChoiceQuestionRepository getMultipleChoiceQuestionRepository() {
+        if(Objects.isNull(multipleChoiceQuestionRepository)){
+            multipleChoiceQuestionRepository =
+                    new MultipleChoiceQuestionRepositoryImpl(getEntityManager());
+        }
+        return multipleChoiceQuestionRepository;
+    }
+
     private ManagerService managerService;
 
     public ManagerService getManagerService() {
@@ -112,7 +141,10 @@ public class ApplicationContext {
     public TeacherService getTeacherService() {
         if(Objects.isNull(teacherService)){
             teacherService = new TeacherServiceImpl(getTeacherRepository(),
-                    getExamService());
+                    getExamService(),
+                    getDescriptiveQuestionsService(),
+                    getMultipleChoiceQuestionService(),
+                    getQuestionService());
         }
         return teacherService;
     }
@@ -133,5 +165,34 @@ public class ApplicationContext {
             examService = new ExamServiceImpl(getExamRepository());
         }
         return examService;
+    }
+
+    private QuestionService questionService;
+
+    public QuestionService getQuestionService() {
+        if(Objects.isNull(questionService)){
+            questionService = new QuestionServiceImpl(getQuestionRepository());
+        }
+        return questionService;
+    }
+
+    private DescriptiveQuestionsService descriptiveQuestionsService;
+
+    public DescriptiveQuestionsService getDescriptiveQuestionsService() {
+        if(Objects.isNull(descriptiveQuestionsService)){
+            descriptiveQuestionsService =
+                    new DescriptiveQuestionsServiceImpl(getDescriptiveQuestionsRepository());
+        }
+        return descriptiveQuestionsService;
+    }
+
+    private MultipleChoiceQuestionService multipleChoiceQuestionService;
+
+    public MultipleChoiceQuestionService getMultipleChoiceQuestionService() {
+        if(Objects.isNull(multipleChoiceQuestionService)){
+            multipleChoiceQuestionService =
+                    new MultipleChoiceQuestionServiceImpl(getMultipleChoiceQuestionRepository());
+        }
+        return multipleChoiceQuestionService;
     }
 }

@@ -14,12 +14,22 @@ public class TeacherServiceImpl
         extends BaseServiceImpl<Teacher, Long, TeacherRepository>
         implements TeacherService{
 
-    public TeacherServiceImpl(TeacherRepository repository, ExamService examService) {
+    public TeacherServiceImpl(TeacherRepository repository,
+                              ExamService examService,
+                              DescriptiveQuestionsService descriptiveQuestionsService,
+                              MultipleChoiceQuestionService multipleChoiceQuestionService,
+                              QuestionService questionService) {
         super(repository);
         this.examService = examService;
+        this.descriptiveQuestionsService = descriptiveQuestionsService;
+        this.multipleChoiceQuestionService = multipleChoiceQuestionService;
+        this.questionService = questionService;
     }
 
     private final ExamService examService;
+    private final DescriptiveQuestionsService descriptiveQuestionsService;
+    private final MultipleChoiceQuestionService multipleChoiceQuestionService;
+    private final QuestionService questionService;
 
     @Override
     public Optional<Teacher> findTeacherByUserName(String userName) {
