@@ -2,7 +2,6 @@ package ir.maktabhw19.service;
 
 import ir.maktabhw19.domains.*;
 import ir.maktabhw19.repository.ManagerRepository;
-import ir.maktabhw19.repository.TeacherRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.time.LocalDate;
