@@ -84,8 +84,7 @@ public class TeacherServiceImpl
 
     public void addDescriptiveQuestionsByTeacher(
             Long teacherID, String questionTitle,
-            String questionStatement,
-            Double defaultScore) {
+            String questionStatement) {
         repository.beginTransaction();
         if (repository.findById(teacherID).isEmpty()) {
             throw new RuntimeException("Teacher not found");
@@ -93,7 +92,6 @@ public class TeacherServiceImpl
         DescriptiveQuestion question = new DescriptiveQuestion();
         question.setQuestionTitle(questionTitle);
         question.setQuestionStatement(questionStatement);
-        question.setDefaultScore(defaultScore);
         descriptiveQuestionService.save(question);
         repository.commitTransaction();
         System.out.println("Descriptive Question added successfully");
@@ -101,9 +99,7 @@ public class TeacherServiceImpl
 
     public void addMultipleChoiceQuestionsByTeacher(
             Long teacherID, String questionTitle,
-            String questionStatement,
-            Double defaultScore,
-            List<String> options,
+            String questionStatement, List<String> options,
             Integer correctOptionIndex){
         repository.beginTransaction();
         if (repository.findById(teacherID).isEmpty()) {
@@ -112,7 +108,6 @@ public class TeacherServiceImpl
         MultipleChoiceQuestion question = new MultipleChoiceQuestion();
         question.setQuestionTitle(questionTitle);
         question.setQuestionStatement(questionStatement);
-        question.setDefaultScore(defaultScore);
         List<String> optionsList = new ArrayList<>();
         optionsList.addAll(options);
         question.setOptions(optionsList);
