@@ -68,13 +68,23 @@ public class ApplicationContext {
         return teacherRepository;
     }
 
+    private CourseRepository courseRepository;
+
+    public CourseRepository getCourseRepository() {
+        if(Objects.isNull(courseRepository)){
+            courseRepository = new CourseRepositoryImpl(getEntityManager());
+        }
+        return courseRepository;
+    }
+
     private ManagerService managerService;
 
     public ManagerService getManagerService() {
         if(Objects.isNull(managerService)){
             managerService = new ManagerServiceImpl(getManagerRepository(),
                     getTeacherService(),
-                    getStudentService());
+                    getStudentService(),
+                    getCourseService());
         }
         return managerService;
     }
@@ -95,5 +105,14 @@ public class ApplicationContext {
             teacherService = new TeacherServiceImpl(getTeacherRepository());
         }
         return teacherService;
+    }
+
+    private CourseService courseService;
+
+    public CourseService getCourseService() {
+        if(Objects.isNull(courseService)){
+            courseService = new CourseServiceImpl(getCourseRepository());
+        }
+        return courseService;
     }
 }
