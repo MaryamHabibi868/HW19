@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class AnswerToMCQ extends Answer{
+public class AnswerToMCQ extends Answer {
 
     private Integer selectedOption;
 
@@ -22,4 +22,9 @@ public class AnswerToMCQ extends Answer{
     @OneToOne
     private MultipleChoiceQuestion question;
 
+    public void calculateGivenScore() {
+        if (question.getCorrectOptionIndex() != selectedOption) {
+            setGivenScore(0.0);
+        }
+    }
 }
