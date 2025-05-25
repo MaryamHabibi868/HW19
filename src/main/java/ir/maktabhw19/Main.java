@@ -5,6 +5,7 @@ import ir.maktabhw19.config.ApplicationContext;
 import ir.maktabhw19.domains.Manager;
 import ir.maktabhw19.service.ManagerService;
 import ir.maktabhw19.service.ManagerServiceImpl;
+import ir.maktabhw19.service.StudentService;
 import ir.maktabhw19.service.TeacherService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -25,6 +26,7 @@ public class Main {
         ApplicationContext context = ApplicationContext.getInstance();
         ManagerService managerService = context.getManagerService();
         TeacherService teacherService = context.getTeacherService();
+        StudentService studentService = context.getStudentService();
 
         System.out.println("Welcome To A project for managing the scheduling, creation, and execution of exams");
         System.out.println("""
@@ -219,9 +221,33 @@ public class Main {
                 }
                 break;
 
+            case 3:
+                System.out.println("""
+                        Do you want to 
+                        1)LOGIN 
+                        or 
+                        2)REGISTER?""");
+                Integer studentChoice = scanner.nextInt();
+                switch (studentChoice) {
+                    case 1:
+                        System.out.println("Please enter your USERNAME");
+                        String userName = scanner.next();
+                        System.out.println("Please enter your PASSWORD");
+                        String password = scanner.next();
+                        studentService.loginStudent(userName, password);
+                        break;
 
+                    case 2:
+                        System.out.println("Please enter your First NAME");
+                        String firstName = scanner.next();
+                        System.out.println("Please enter your Last NAME");
+                        String lastName = scanner.next();
+                        System.out.println("Please enter your USERNAME");
+                        String userName1 = scanner.next();
+                        System.out.println("Please enter your PASSWORD");
+                        String password1 = scanner.next();
+                        studentService.registerStudent(firstName, lastName, userName1, password1);
+                }
         }
-
-
     }
 }
