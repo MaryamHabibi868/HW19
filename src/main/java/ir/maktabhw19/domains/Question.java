@@ -23,11 +23,6 @@ public class Question extends BaseEntity <Long> {
     @NotBlank (message = "Statement of question should be entered")
     private String questionStatement;
 
-    @NotBlank (message = "Default score of question should be entered")
-    private Double defaultScore;
-
-    private Double givenScore;
-
     @ManyToOne
     private Exam exam;
 

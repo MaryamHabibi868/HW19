@@ -1,13 +1,13 @@
 package ir.maktabhw19.domains;
 
 import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @DiscriminatorValue("MCQ")
@@ -19,8 +19,7 @@ import java.util.List;
 @ToString(callSuper = true)
 public class MultipleChoiceQuestion extends Question {
 
-    @ElementCollection
-    private List<String> options = new ArrayList<>();
+    private Map<Integer, String> options = new HashMap<>();
 
     @NotBlank(message = "Index of correct option should be entered")
     private Integer correctOptionIndex;

@@ -21,8 +21,6 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Exam extends BaseEntity<Long> {
 
-    private Double givenScore;
-
     @NotBlank (message = "Start Date of Exam should be entered")
     private LocalDateTime startDate;
 
@@ -35,30 +33,6 @@ public class Exam extends BaseEntity<Long> {
     @OneToMany (mappedBy = "exam" , cascade = CascadeType.ALL)
     private Set<Question> questions = new HashSet<>();
 
-  public Double calculateDefaultExamScore() {
-      if (questions == null || questions.isEmpty()) {
-          return 0.0;
-      }
-      return questions.stream()
-              .filter(q -> q.getDefaultScore() != null)
-              .mapToDouble(Question :: getDefaultScore)
-              .sum();
-  }
-
-    public Double calculateGivenScore() {
-        if (questions == null || questions.isEmpty()) {
-            return 0.0;
-        }
-        return questions.stream()
-                .filter(q -> q.getGivenScore() != null)
-                .mapToDouble(Question :: getGivenScore)
-                .sum();
-    }
-
-    public void addQuestion(Question question) {
-        questions.add(question);
-        question.setExam(this);
-    }
 
     public void removeQuestion(Question question) {
         questions.remove(question);
