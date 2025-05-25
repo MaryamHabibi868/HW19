@@ -37,6 +37,7 @@ public class TeacherServiceImpl
     }
 
 
+    @Override
     public void registerTeacher(String firstName, String lastName,
                                 String userName, String password) {
         repository.beginTransaction();
@@ -52,6 +53,7 @@ public class TeacherServiceImpl
                 "Manager should approve your registration ");
     }
 
+    @Override
     public void loginTeacher(String username, String password) {
         repository.beginTransaction();
         Teacher teacher = new Teacher();
