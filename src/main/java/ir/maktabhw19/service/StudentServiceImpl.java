@@ -26,6 +26,7 @@ public class StudentServiceImpl
         return repository.findByUsername(userName);
     }
 
+    @Override
     public void registerStudent(String firstName, String lastName,
                                 String userName, String password) {
         repository.beginTransaction();
@@ -41,6 +42,7 @@ public class StudentServiceImpl
                 "Manager should approve your registration ");
     }
 
+    @Override
     public void loginStudent(String username, String password) {
         repository.beginTransaction();
         Student student = new Student();
