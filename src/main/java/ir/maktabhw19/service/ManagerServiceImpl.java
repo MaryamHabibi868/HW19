@@ -5,6 +5,7 @@ import ir.maktabhw19.repository.ManagerRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +29,7 @@ public class ManagerServiceImpl
     private final CourseService courseService;
 
 
+    @Override
     public void registerManager(String firstName, String lastName,
                                 String userName, String password) {
         repository.beginTransaction();
@@ -41,6 +43,7 @@ public class ManagerServiceImpl
         System.out.println("Manager registered successfully");
     }
 
+    @Override
     public void loginManager(String username, String password) {
         repository.beginTransaction();
         Manager manager = new Manager();
@@ -57,6 +60,7 @@ public class ManagerServiceImpl
         }
     }
 
+    @Override
     public void proofRegisteredTeacher(String userName) {
         repository.beginTransaction();
         Optional<Teacher> foundTeacher = teacherService.findTeacherByUserName(userName);
@@ -73,6 +77,7 @@ public class ManagerServiceImpl
         }
     }
 
+    @Override
     public void proofRegisteredStudent(String userName) {
         repository.beginTransaction();
         Optional<Student> foundStudent = studentService.findStudentByUserName(userName);
@@ -98,6 +103,7 @@ public class ManagerServiceImpl
         return teacherService.findAll();
     }
 
+    @Override
     public void addCourse(String title, LocalDate startDate, LocalDate endDate) {
         repository.beginTransaction();
         if (courseService.findByTitle(title).isPresent()) {
@@ -116,23 +122,25 @@ public class ManagerServiceImpl
         repository.commitTransaction();
     }
 
+    @Override
     public void addTeacherToCourse(Long courseId, Long teacherId) {
         repository.beginTransaction();
-       if (courseService.findById(courseId).isEmpty()) {
-           throw new RuntimeException("CourseId " + courseId + " not found");
-       }
-       if (teacherService.findById(teacherId).isEmpty()) {
-           throw new RuntimeException("TeacherId " + teacherId + " not found");
-       }
-           Course course = courseService.findById(courseId).get();
-           course.setTeacher(teacherService.findById(teacherId).get());
-           courseService.save(course);
-           teacherService.save(teacherService.findById(teacherId).get());
-           repository.commitTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("CourseId " + courseId + " not found");
+        }
+        if (teacherService.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("TeacherId " + teacherId + " not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        course.setTeacher(teacherService.findById(teacherId).get());
+        courseService.save(course);
+        teacherService.save(teacherService.findById(teacherId).get());
+        repository.commitTransaction();
         System.out.println("Teacher added to this course " + courseId + " successfully");
-       }
+    }
 
-       public void addStudentToCourse(Long studentId, Long courseId) {
+    @Override
+    public void addStudentToCourse(Long studentId, Long courseId) {
         repository.beginTransaction();
         if (courseService.findById(courseId).isEmpty()) {
             throw new RuntimeException("CourseId " + courseId + " not found");
@@ -146,5 +154,5 @@ public class ManagerServiceImpl
         studentService.save(studentService.findById(studentId).get());
         repository.commitTransaction();
         System.out.println("Student added to this course " + courseId + " successfully");
-       }
     }
+}
