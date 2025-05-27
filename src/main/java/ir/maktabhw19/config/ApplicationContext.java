@@ -174,7 +174,8 @@ public class ApplicationContext {
                     getExamService(),
                     getDescriptiveQuestionsService(),
                     getMultipleChoiceQuestionService(),
-                    getQuestionService());
+                    getQuestionService(),
+                    getCourseService());
         }
         return teacherService;
     }

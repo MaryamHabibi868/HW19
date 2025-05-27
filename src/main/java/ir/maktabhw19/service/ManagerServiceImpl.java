@@ -151,12 +151,10 @@ public class ManagerServiceImpl
             System.out.println("Course not found");
         }
         Course course = courseService.findById(courseId).get();
-        course.setTitle(null);
-        course.setStartDate(null);
-        course.setEndDate(null);
         course.setStudents(null);
         course.setTeacher(null);
         courseService.save(course);
+        courseService.deleteById(courseId);
         repository.commitTransaction();
         System.out.println("Course removed successfully");
     }

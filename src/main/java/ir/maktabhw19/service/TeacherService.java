@@ -36,4 +36,8 @@ public interface TeacherService
              Double score);
 
      void runExam(Long examId);
+
+     void printAllCoursesByTeacherId(Long teacherId);
+
+     void printAllExamsByCourseId(Long courseId);
 }

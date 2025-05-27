@@ -15,18 +15,20 @@ public class TeacherServiceImpl
                               ExamService examService,
                               DescriptiveQuestionService descriptiveQuestionService,
                               MultipleChoiceQuestionService multipleChoiceQuestionService,
-                              QuestionService questionService) {
+                              QuestionService questionService, CourseService courseService) {
         super(repository);
         this.examService = examService;
         this.descriptiveQuestionService = descriptiveQuestionService;
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
         this.questionService = questionService;
+        this.courseService = courseService;
     }
 
     private final ExamService examService;
     private final DescriptiveQuestionService descriptiveQuestionService;
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
     private final QuestionService questionService;
+    private final CourseService courseService;
 
     @Override
     public Optional<Teacher> findTeacherByUserName(String userName) {
@@ -152,6 +154,7 @@ public class TeacherServiceImpl
         System.out.println("Multiple Choice Question added successfully");
     }
 
+    @Override
     public void runExam(Long examId) {
         repository.beginTransaction();
         Exam exam = examService.findById(examId).get();
@@ -164,6 +167,26 @@ public class TeacherServiceImpl
         System.out.println("Exam started");
         System.out.println("Exam will be finished at " + exam.getEndDate());
         System.out.println(exam.getQuestions());
+    }
+
+    @Override
+    public void printAllCoursesByTeacherId(Long teacherId) {
+        if(repository.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        Teacher teacher = repository.findById(teacherId).get();
+        System.out.println("This is the list of courses for the teacher");
+        System.out.println(teacher.getCourses());
+    }
+
+    @Override
+    public void printAllExamsByCourseId(Long courseId) {
+        if(courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        System.out.println("This is the list of exams for the course");
+        System.out.println(course.getExams());
     }
     /*public void addDescriptiveQuestionToExamByTeacher(
             Long teacherId, Long examId,

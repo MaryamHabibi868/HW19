@@ -216,7 +216,9 @@ public class Main {
                                 2) Add Question To Exam From BankQuestion?
                                 3) Add Descriptive Question To Exam?
                                 4) Add Multiple Choice Question To Exam?
-                                5) Run Exam?""");
+                                5) Run Exam?
+                                6) Print All Courses
+                                7) Print All the Exams in the Course""");
                         Integer teacherChoice2 = scanner.nextInt();
                         switch (teacherChoice2) {
                             case 1:
@@ -284,6 +286,26 @@ public class Main {
                                 Long id8 = scanner.nextLong();
                                 teacherService.runExam(id8);
                                 break;
+
+                            case 6:
+                                System.out.println("Please enter your ID");
+                                Long id9 = scanner.nextLong();
+                                teacherService.printAllCoursesByTeacherId(id9);
+                                break;
+
+                                case 7:
+                                    System.out.println("Please enter your ID");
+                                    Long id10 = scanner.nextLong();
+                                    System.out.println("""
+                                        This is the List of Courses.
+                                        Please enter the ID of course 
+                                        you would like to see All the Exams""");
+                                    teacherService.printAllCoursesByTeacherId(id10);
+                                    Long courseId11 = scanner.nextLong();
+                                    teacherService.printAllExamsByCourseId(courseId11);
+                                    break;
+
+
                         }
                 }
                 break;
