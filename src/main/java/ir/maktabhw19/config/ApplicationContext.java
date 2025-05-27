@@ -1,5 +1,6 @@
 package ir.maktabhw19.config;
 
+import ir.maktabhw19.domains.AnswerToDQ;
 import ir.maktabhw19.repository.*;
 import ir.maktabhw19.service.*;
 import jakarta.persistence.EntityManager;
@@ -113,6 +114,36 @@ public class ApplicationContext {
         return multipleChoiceQuestionRepository;
     }
 
+    private AnswerRepository answerRepository;
+
+    public AnswerRepository getAnswerRepository() {
+        if(Objects.isNull(answerRepository)){
+            answerRepository =
+                    new AnswerRepositoryImpl(getEntityManager());
+        }
+        return answerRepository;
+    }
+
+    private AnswerToDQRepository answerToDQRepository;
+
+    public AnswerToDQRepository getAnswerToDQRepository() {
+        if(Objects.isNull(answerToDQRepository)){
+            answerToDQRepository =
+                    new AnswerToDQRepositoryImpl(getEntityManager());
+        }
+        return answerToDQRepository;
+    }
+
+    private AnswerToMCQRepository answerToMCQRepository;
+
+    public AnswerToMCQRepository getAnswerToMCQRepository() {
+        if(Objects.isNull(answerToMCQRepository)){
+            answerToMCQRepository =
+                    new AnswerToMCQRepositoryImpl(getEntityManager());
+        }
+        return answerToMCQRepository;
+    }
+
     private ManagerService managerService;
 
     public ManagerService getManagerService() {
@@ -193,5 +224,35 @@ public class ApplicationContext {
                     new MultipleChoiceQuestionServiceImpl(getMultipleChoiceQuestionRepository());
         }
         return multipleChoiceQuestionService;
+    }
+
+    private AnswerService answerService;
+
+    public AnswerService getAnswerService() {
+        if(Objects.isNull(answerService)){
+            answerService =
+                    new AnswerServiceImpl(getAnswerRepository());
+        }
+        return answerService;
+    }
+
+    private AnswerToDQService answerToDQService;
+
+    public AnswerToDQService getAnswerToDQService() {
+        if(Objects.isNull(answerToDQService)){
+            answerToDQService =
+                    new AnswerToDQServiceImpl(getAnswerToDQRepository());
+        }
+        return answerToDQService;
+    }
+
+    private AnswerToMCQService answerToMCQService;
+
+    public AnswerToMCQService getAnswerToMCQService() {
+        if(Objects.isNull(answerToMCQService)){
+            answerToMCQService =
+                    new AnswerToMCQServiceImpl(getAnswerToMCQRepository());
+        }
+        return answerToMCQService;
     }
 }
