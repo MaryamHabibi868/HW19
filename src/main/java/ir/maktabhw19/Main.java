@@ -71,7 +71,10 @@ public class Main {
                                 2) Prove registration of students?
                                 3) Add COURSE?
                                 4) Add teacher to course?
-                                5) Add student to course?""");
+                                5) Add student to course?
+                                6) Print All Courses
+                                7) Print All Teachers
+                                8) Print All Students""");
                         Integer managerChoice2 = scanner.nextInt();
                         switch (managerChoice2) {
                             case 1:
@@ -247,6 +250,22 @@ public class Main {
                         System.out.println("Please enter your PASSWORD");
                         String password1 = scanner.next();
                         studentService.registerStudent(firstName, lastName, userName1, password1);
+
+                        System.out.println("""
+                                Enter what you would like to do
+                                1) Participate in the Exam?""");
+
+                        Integer studentChoice1 = scanner.nextInt();
+
+                        switch (studentChoice1) {
+                            case 1:
+                                System.out.println("Please enter your ID");
+                                Long id1 = scanner.nextLong();
+                                System.out.println("Please enter the ID of exam");
+                                Long id2 = scanner.nextLong();
+                                studentService.participateInExamByStudent(id1, id2);
+                                break;
+                        }
                 }
         }
     }

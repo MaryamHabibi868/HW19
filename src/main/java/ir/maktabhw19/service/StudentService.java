@@ -15,4 +15,6 @@ public interface StudentService
 
     void registerStudent(String firstName, String lastName,
                          String userName, String password);
+
+    void participateInExamByStudent(Long studentId, Long examId);
 }
