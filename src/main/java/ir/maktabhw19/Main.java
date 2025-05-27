@@ -79,7 +79,8 @@ public class Main {
                                 10) Changed Teacher To Student
                                 11) Remove Course
                                 12) Remove Teacher From Course
-                                13) Remove Student From Course""");
+                                13) Remove Student From Course
+                                14) Print All USERS in the Course""");
                         Integer managerChoice2 = scanner.nextInt();
                         switch (managerChoice2) {
                             case 1:
@@ -164,6 +165,16 @@ public class Main {
                                 System.out.println("Please enter the ID of student");
                                 Long studentId3 = scanner.nextLong();
                                 managerService.removeStudentFromCourse(studentId3, courseId4);
+                                break;
+
+                            case 14:
+                                System.out.println("""
+                                        This is the List of Courses.
+                                        Please enter the ID of course 
+                                        you would like to see All the Users""");
+                                managerService.printAllCourses();
+                                Long courseId5 = scanner.nextLong();
+                                managerService.printUsersByCourseID(courseId5);
                                 break;
 
 

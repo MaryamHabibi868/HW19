@@ -43,4 +43,6 @@ public interface ManagerService
     void removeStudentFromCourse(Long studentId, Long courseId);
 
     void removeTeacherFromCourse(Long courseId, Long teacherId);
+
+    void printUsersByCourseID(Long courseId);
 }

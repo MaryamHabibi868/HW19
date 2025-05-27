@@ -109,6 +109,21 @@ public class ManagerServiceImpl
         return studentService.findAll();
     }
 
+    @Override
+    public void printUsersByCourseID(Long courseId) {
+        repository.beginTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        System.out.println("This is the List of Teachers in this course:");
+        System.out.println(course.getTeacher());
+        System.out.println("*****************************************************");
+        System.out.println("This is the List of Students in this course:");
+        System.out.println(course.getStudents());
+        repository.commitTransaction();
+    }
+
 
     @Override
     public void addCourse(String title, LocalDate startDate, LocalDate endDate) {
