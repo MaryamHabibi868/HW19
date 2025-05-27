@@ -253,7 +253,9 @@ public class ApplicationContext {
     public AnswerToMCQService getAnswerToMCQService() {
         if(Objects.isNull(answerToMCQService)){
             answerToMCQService =
-                    new AnswerToMCQServiceImpl(getAnswerToMCQRepository());
+                    new AnswerToMCQServiceImpl(getAnswerToMCQRepository(),
+                            getStudentService(),
+                            getMultipleChoiceQuestionService());
         }
         return answerToMCQService;
     }
