@@ -25,6 +25,8 @@ public class AnswerToMCQ extends Answer {
     public void calculateGivenScore() {
         if (question.getCorrectOptionIndex() != selectedOption) {
             setGivenScore(0.0);
+        } else {
+            setGivenScore(getGivenScore());
         }
     }
 }
