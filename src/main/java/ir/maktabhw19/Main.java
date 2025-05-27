@@ -76,7 +76,10 @@ public class Main {
                                 7) Print All Teachers
                                 8) Print All Students
                                 9) Changed Student To Teacher
-                                10) Changed Teacher To Student""");
+                                10) Changed Teacher To Student
+                                11) Remove Course
+                                12) Remove Teacher From Course
+                                13) Remove Student From Course""");
                         Integer managerChoice2 = scanner.nextInt();
                         switch (managerChoice2) {
                             case 1:
@@ -129,17 +132,41 @@ public class Main {
                                 System.out.println(managerService.printAllStudents());
                                 break;
 
-                                case 9:
-                                    System.out.println("Please enter the ID of student");
-                                    Long studentId1 = scanner.nextLong();
-                                    managerService.changeStudentToTeacher(studentId1);
-                                    break;
+                            case 9:
+                                System.out.println("Please enter the ID of student");
+                                Long studentId1 = scanner.nextLong();
+                                managerService.changeStudentToTeacher(studentId1);
+                                break;
 
-                                    case 10:
-                                        System.out.println("Please enter the ID of teacher");
-                                        Long teacherId1 = scanner.nextLong();
-                                        managerService.changeTeacherToStudent(teacherId1);
-                                        break;
+                            case 10:
+                                System.out.println("Please enter the ID of teacher");
+                                Long teacherId1 = scanner.nextLong();
+                                managerService.changeTeacherToStudent(teacherId1);
+                                break;
+
+                            case 11:
+                                System.out.println("Please enter the ID of course");
+                                Long courseId2 = scanner.nextLong();
+                                managerService.removeCourse(courseId2);
+                                break;
+
+                            case 12:
+                                System.out.println("Please enter the ID of course");
+                                Long courseId3 = scanner.nextLong();
+                                System.out.println("Please enter the ID of teacher");
+                                Long teacherId2 = scanner.nextLong();
+                                managerService.removeTeacherFromCourse(courseId3, teacherId2);
+                                break;
+
+                            case 13:
+                                System.out.println("Please enter the ID of course");
+                                Long courseId4 = scanner.nextLong();
+                                System.out.println("Please enter the ID of student");
+                                Long studentId3 = scanner.nextLong();
+                                managerService.removeStudentFromCourse(studentId3, courseId4);
+                                break;
+
+
                         }
                 }
                 break;

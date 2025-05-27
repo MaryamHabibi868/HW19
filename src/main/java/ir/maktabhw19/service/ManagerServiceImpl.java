@@ -130,6 +130,23 @@ public class ManagerServiceImpl
     }
 
     @Override
+    public void removeCourse(Long courseId) {
+        repository.beginTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            System.out.println("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        course.setTitle(null);
+        course.setStartDate(null);
+        course.setEndDate(null);
+        course.setStudents(null);
+        course.setTeacher(null);
+        courseService.save(course);
+        repository.commitTransaction();
+        System.out.println("Course removed successfully");
+    }
+
+    @Override
     public void addTeacherToCourse(Long courseId, Long teacherId) {
         repository.beginTransaction();
         if (courseService.findById(courseId).isEmpty()) {
@@ -144,6 +161,23 @@ public class ManagerServiceImpl
         teacherService.save(teacherService.findById(teacherId).get());
         repository.commitTransaction();
         System.out.println("Teacher added to this course " + courseId + " successfully");
+    }
+
+    @Override
+    public void removeTeacherFromCourse(Long courseId, Long teacherId) {
+        repository.beginTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("CourseId " + courseId + " not found");
+        }
+        if (teacherService.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("TeacherId " + teacherId + " not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        course.setTeacher(null);
+        courseService.save(course);
+        teacherService.save(teacherService.findById(teacherId).get());
+        repository.commitTransaction();
+        System.out.println("Teacher removed from this course " + courseId + " successfully");
     }
 
     @Override
@@ -164,7 +198,24 @@ public class ManagerServiceImpl
     }
 
     @Override
-    public void changeStudentToTeacher(Long studentId){
+    public void removeStudentFromCourse(Long studentId, Long courseId) {
+        repository.beginTransaction();
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("CourseId " + courseId + " not found");
+        }
+        if (studentService.findById(studentId).isEmpty()) {
+            throw new RuntimeException("StudentId " + studentId + " not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        course.getStudents().remove(studentService.findById(studentId).get());
+        courseService.save(course);
+        studentService.save(studentService.findById(studentId).get());
+        repository.commitTransaction();
+        System.out.println("Student removed from this course " + courseId + " successfully");
+    }
+
+    @Override
+    public void changeStudentToTeacher(Long studentId) {
         repository.beginTransaction();
         if (studentService.findById(studentId).isEmpty()) {
             throw new RuntimeException("StudentId " + studentId + " not found");
@@ -180,7 +231,7 @@ public class ManagerServiceImpl
     }
 
     @Override
-    public void changeTeacherToStudent(Long teacherId){
+    public void changeTeacherToStudent(Long teacherId) {
         repository.beginTransaction();
         if (teacherService.findById(teacherId).isEmpty()) {
             throw new RuntimeException("TeacherId " + teacherId + " not found");

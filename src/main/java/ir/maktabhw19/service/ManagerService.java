@@ -37,4 +37,10 @@ public interface ManagerService
     void changeStudentToTeacher(Long studentId);
 
     void changeTeacherToStudent(Long teacherId);
+
+    void removeCourse(Long courseId);
+
+    void removeStudentFromCourse(Long studentId, Long courseId);
+
+    void removeTeacherFromCourse(Long courseId, Long teacherId);
 }
