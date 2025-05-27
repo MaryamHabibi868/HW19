@@ -218,7 +218,8 @@ public class Main {
                                 4) Add Multiple Choice Question To Exam?
                                 5) Run Exam?
                                 6) Print All Courses
-                                7) Print All the Exams in the Course""");
+                                7) Print All the Exams in the Course
+                                8) Print All the Exams you had run""");
                         Integer teacherChoice2 = scanner.nextInt();
                         switch (teacherChoice2) {
                             case 1:
@@ -293,19 +294,28 @@ public class Main {
                                 teacherService.printAllCoursesByTeacherId(id9);
                                 break;
 
-                                case 7:
-                                    System.out.println("Please enter your ID");
-                                    Long id10 = scanner.nextLong();
-                                    System.out.println("""
+                            case 7:
+                                System.out.println("Please enter your ID");
+                                Long id10 = scanner.nextLong();
+                                System.out.println("""
                                         This is the List of Courses.
                                         Please enter the ID of course 
                                         you would like to see All the Exams""");
-                                    teacherService.printAllCoursesByTeacherId(id10);
-                                    Long courseId11 = scanner.nextLong();
-                                    teacherService.printAllExamsByCourseId(courseId11);
-                                    break;
+                                teacherService.printAllCoursesByTeacherId(id10);
+                                Long courseId11 = scanner.nextLong();
+                                teacherService.printAllExamsByCourseId(courseId11);
+                                break;
 
-
+                            case 8:
+                                System.out.println("Please enter your ID");
+                                Long id12 = scanner.nextLong();
+                                System.out.println("""
+                                        Please enter the ID of Course 
+                                        you would like to see All the Exams
+                                        you had run yourself""");
+                                Long id13 = scanner.nextLong();
+                                teacherService.printAllExamsInCourseByTeacherId(id12, id13);
+                                break;
                         }
                 }
                 break;

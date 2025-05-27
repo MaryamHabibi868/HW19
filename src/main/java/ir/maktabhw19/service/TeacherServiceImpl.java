@@ -6,6 +6,8 @@ import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TeacherServiceImpl
         extends BaseServiceImpl<Teacher, Long, TeacherRepository>
@@ -171,7 +173,7 @@ public class TeacherServiceImpl
 
     @Override
     public void printAllCoursesByTeacherId(Long teacherId) {
-        if(repository.findById(teacherId).isEmpty()) {
+        if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
         Teacher teacher = repository.findById(teacherId).get();
@@ -181,12 +183,31 @@ public class TeacherServiceImpl
 
     @Override
     public void printAllExamsByCourseId(Long courseId) {
-        if(courseService.findById(courseId).isEmpty()) {
+        if (courseService.findById(courseId).isEmpty()) {
             throw new RuntimeException("Course not found");
         }
         Course course = courseService.findById(courseId).get();
         System.out.println("This is the list of exams for the course");
         System.out.println(course.getExams());
+    }
+
+    @Override
+    public void printAllExamsInCourseByTeacherId(Long teacherId,
+                                                 Long courseId) {
+        repository.beginTransaction();
+        if (repository.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        List<Exam> examsOfThisTeacher = course.getExams().stream()
+                .filter(exam -> exam.getCourse().getTeacher().getId().equals(teacherId))
+                .toList();
+        System.out.println("This is the list of exams for the teacher");
+        System.out.println(examsOfThisTeacher);
+        repository.commitTransaction();
     }
     /*public void addDescriptiveQuestionToExamByTeacher(
             Long teacherId, Long examId,

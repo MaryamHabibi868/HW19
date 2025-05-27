@@ -40,4 +40,7 @@ public interface TeacherService
      void printAllCoursesByTeacherId(Long teacherId);
 
      void printAllExamsByCourseId(Long courseId);
+
+     void printAllExamsInCourseByTeacherId(Long teacherId,
+                                           Long courseId);
 }
