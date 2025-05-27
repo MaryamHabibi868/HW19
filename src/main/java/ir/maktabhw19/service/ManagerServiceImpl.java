@@ -5,7 +5,6 @@ import ir.maktabhw19.repository.ManagerRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,13 +94,21 @@ public class ManagerServiceImpl
         }
     }
 
-    public List<Student> printAllStudent() {
+    @Override
+    public List<Course> printAllCourses() {
+        return courseService.findAll();
+    }
+
+    @Override
+    public List<Teacher> printAllTeachers() {
+        return teacherService.findAll();
+    }
+
+    @Override
+    public List<Student> printAllStudents() {
         return studentService.findAll();
     }
 
-    public List<Teacher> printAllTeacher() {
-        return teacherService.findAll();
-    }
 
     @Override
     public void addCourse(String title, LocalDate startDate, LocalDate endDate) {

@@ -114,6 +114,17 @@ public class Main {
                                 Long courseId1 = scanner.nextLong();
                                 managerService.addStudentToCourse(studentId, courseId1);
                                 break;
+
+                            case 6:
+                                System.out.println(managerService.printAllCourses());
+                                break;
+
+                            case 7:
+                                System.out.println(managerService.printAllTeachers());
+                                break;
+
+                            case 8:
+                                System.out.println(managerService.printAllStudents());
                         }
                 }
                 break;
