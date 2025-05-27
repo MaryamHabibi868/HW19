@@ -209,11 +209,10 @@ public class TeacherServiceImpl
         System.out.println(examsOfThisTeacher);
         repository.commitTransaction();
     }
-    /*public void addDescriptiveQuestionToExamByTeacher(
-            Long teacherId, Long examId,
-            Long descriptiveQuestionId,
-            Double defaultScore) {
-        Double questionDefaultScore = 0.0;
+
+    @Override
+    public void removeExamFromCourseByTeacherId(Long teacherId,
+                                                Long examId) {
         repository.beginTransaction();
         if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
@@ -221,74 +220,18 @@ public class TeacherServiceImpl
         if (examService.findById(examId).isEmpty()) {
             throw new RuntimeException("Exam not found");
         }
-        if (descriptiveQuestionService.findById(descriptiveQuestionId).isEmpty()) {
-            throw new RuntimeException("Descriptive question not found");
-        }
-        DescriptiveQuestion descriptiveQuestion = new DescriptiveQuestion();
-        descriptiveQuestionService.save(descriptiveQuestion);
         Exam exam = examService.findById(examId).get();
-        exam.setScore(defaultScore);
-        examService.save(exam);
-        repository.commitTransaction();
-        System.out.println("Add descriptive question to exam successfully");
-    }*/
-
-   /* public void addMultipleChoiceQuestionToExamByTeacher(
-            Long teacherId, Long examId,
-            Long multipleChoiceQuestionId) {
-        repository.beginTransaction();
-        if (repository.findById(teacherId).isEmpty()) {
-            throw new RuntimeException("Teacher not found");
+        if (exam.getCourse().getTeacher().getId().equals(teacherId)) {
+            examService.deleteById(examId);
+            examService.save(exam);
+            Course course = courseService.findById(exam.getCourse().getId()).get();
+            course.getExams().remove(exam);
+            courseService.save(course);
+            repository.commitTransaction();
+            System.out.println("Exams removed successfully");
+        } else {
+            throw new RuntimeException("You cannot delete this exam because you didn't create it.");
         }
-        if (examService.findById(examId).isEmpty()) {
-            throw new RuntimeException("Exam not found");
-        }
-        if (multipleChoiceQuestionService.findById(multipleChoiceQuestionId).isEmpty()) {
-            throw new RuntimeException("Multiple Choice question not found");
-        }
-        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion();
-        multipleChoiceQuestionService.save(multipleChoiceQuestion);
-        Exam exam = examService.findById(examId).get();
-        exam.setQuestions((Set<Question>) multipleChoiceQuestion);
-        examService.save(exam);
-        repository.commitTransaction();
-        System.out.println("Add multiple choice question to exam successfully");
-    }*/
-
-
-    /*public void addDescriptiveQuestionsByTeacher(
-            Long teacherID, String questionTitle,
-            String questionStatement) {
-        repository.beginTransaction();
-        if (repository.findById(teacherID).isEmpty()) {
-            throw new RuntimeException("Teacher not found");
-        }
-        DescriptiveQuestion question = new DescriptiveQuestion();
-        question.setQuestionTitle(questionTitle);
-        question.setQuestionStatement(questionStatement);
-        descriptiveQuestionService.save(question);
-        repository.commitTransaction();
-        System.out.println("Descriptive Question added successfully");
     }
-
-    public void addMultipleChoiceQuestionsByTeacher(
-            Long teacherID, String questionTitle,
-            String questionStatement, List<String> options,
-            Integer correctOptionIndex) {
-        repository.beginTransaction();
-        if (repository.findById(teacherID).isEmpty()) {
-            throw new RuntimeException("Teacher not found");
-        }
-        MultipleChoiceQuestion question = new MultipleChoiceQuestion();
-        question.setQuestionTitle(questionTitle);
-        question.setQuestionStatement(questionStatement);
-        List<String> optionsList = new ArrayList<>();
-        optionsList.addAll(options);
-        question.setOptions(optionsList);
-        question.setCorrectOptionIndex(correctOptionIndex);
-        multipleChoiceQuestionService.save(question);
-        repository.commitTransaction();
-        System.out.println("Multiple Choice Question added successfully");
-    }*/
 
 }

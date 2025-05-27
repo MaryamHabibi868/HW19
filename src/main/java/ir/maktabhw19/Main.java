@@ -2,14 +2,10 @@ package ir.maktabhw19;
 
 
 import ir.maktabhw19.config.ApplicationContext;
-import ir.maktabhw19.domains.Manager;
 import ir.maktabhw19.service.ManagerService;
-import ir.maktabhw19.service.ManagerServiceImpl;
 import ir.maktabhw19.service.StudentService;
 import ir.maktabhw19.service.TeacherService;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import lombok.Lombok;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -219,7 +215,8 @@ public class Main {
                                 5) Run Exam?
                                 6) Print All Courses
                                 7) Print All the Exams in the Course
-                                8) Print All the Exams you had run""");
+                                8) Print All the Exams you had run
+                                9) Remove the Exam""");
                         Integer teacherChoice2 = scanner.nextInt();
                         switch (teacherChoice2) {
                             case 1:
@@ -316,6 +313,13 @@ public class Main {
                                 Long id13 = scanner.nextLong();
                                 teacherService.printAllExamsInCourseByTeacherId(id12, id13);
                                 break;
+
+                            case 9:
+                                System.out.println("Please enter your ID");
+                                Long id14 = scanner.nextLong();
+                                System.out.println("Please enter the ID of Exam");
+                                Long id15 = scanner.nextLong();
+                                teacherService.removeExamFromCourseByTeacherId(id14, id15);
                         }
                 }
                 break;

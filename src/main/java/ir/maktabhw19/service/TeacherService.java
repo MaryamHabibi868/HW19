@@ -43,4 +43,7 @@ public interface TeacherService
 
      void printAllExamsInCourseByTeacherId(Long teacherId,
                                            Long courseId);
+
+     public void removeExamFromCourseByTeacherId(Long teacherId,
+                                                 Long examId);
 }
