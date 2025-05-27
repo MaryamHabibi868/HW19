@@ -129,7 +129,8 @@ public class ApplicationContext {
 
     public StudentService getStudentService() {
         if(Objects.isNull(studentService)){
-            studentService = new StudentServiceImpl(getStudentRepository());
+            studentService = new StudentServiceImpl(getStudentRepository(),
+            getExamService());
         }
         return studentService;
     }

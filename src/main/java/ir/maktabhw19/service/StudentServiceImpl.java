@@ -1,6 +1,7 @@
 package ir.maktabhw19.service;
 
 
+import ir.maktabhw19.domains.Exam;
 import ir.maktabhw19.domains.Manager;
 import ir.maktabhw19.domains.RegistrationConfirmation;
 import ir.maktabhw19.domains.Student;
@@ -13,10 +14,13 @@ public class StudentServiceImpl
         extends BaseServiceImpl<Student, Long, StudentRepository>
         implements StudentService{
 
-    public StudentServiceImpl(StudentRepository repository) {
+    public StudentServiceImpl(StudentRepository repository,
+                              ExamService examService) {
         super(repository);
+        this.examService = examService;
     }
 
+    private final ExamService examService;
 
     @Override
     public Optional<Student> findStudentByUserName(String userName) {
@@ -57,5 +61,19 @@ public class StudentServiceImpl
         else {
             System.out.println("userName not found");
         }
+    }
+
+    public void participateInExamByStudent(Long studentId, Long examId) {
+        repository.beginTransaction();
+        if (repository.findById(studentId).isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        Exam exam = examService.findById(examId).get();
+        examService.save(exam);
+        repository.save(repository.findById(studentId).get());
+        repository.commitTransaction();
     }
 }
