@@ -241,7 +241,9 @@ public class ApplicationContext {
     public AnswerToDQService getAnswerToDQService() {
         if(Objects.isNull(answerToDQService)){
             answerToDQService =
-                    new AnswerToDQServiceImpl(getAnswerToDQRepository());
+                    new AnswerToDQServiceImpl(getAnswerToDQRepository(),
+                            getStudentService(),
+                            getDescriptiveQuestionsService());
         }
         return answerToDQService;
     }
