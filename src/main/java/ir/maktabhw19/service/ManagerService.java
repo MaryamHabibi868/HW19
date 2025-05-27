@@ -33,4 +33,8 @@ public interface ManagerService
     List<Teacher> printAllTeachers();
 
     List<Student> printAllStudents();
+
+    void changeStudentToTeacher(Long studentId);
+
+    void changeTeacherToStudent(Long teacherId);
 }

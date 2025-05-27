@@ -162,4 +162,36 @@ public class ManagerServiceImpl
         repository.commitTransaction();
         System.out.println("Student added to this course " + courseId + " successfully");
     }
+
+    @Override
+    public void changeStudentToTeacher(Long studentId){
+        repository.beginTransaction();
+        if (studentService.findById(studentId).isEmpty()) {
+            throw new RuntimeException("StudentId " + studentId + " not found");
+        }
+        Teacher teacher = new Teacher();
+        teacher.setFirstName(studentService.findById(studentId).get().getFirstName());
+        teacher.setLastName(studentService.findById(studentId).get().getLastName());
+        teacher.setUserName(studentService.findById(studentId).get().getUserName());
+        teacher.setPassword(studentService.findById(studentId).get().getPassword());
+        teacherService.save(teacher);
+        repository.commitTransaction();
+        System.out.println("Student changed to teacher successfully");
+    }
+
+    @Override
+    public void changeTeacherToStudent(Long teacherId){
+        repository.beginTransaction();
+        if (teacherService.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("TeacherId " + teacherId + " not found");
+        }
+        Student student = new Student();
+        student.setFirstName(teacherService.findById(teacherId).get().getFirstName());
+        student.setLastName(teacherService.findById(teacherId).get().getLastName());
+        student.setUserName(teacherService.findById(teacherId).get().getUserName());
+        student.setPassword(teacherService.findById(teacherId).get().getPassword());
+        studentService.save(student);
+        repository.commitTransaction();
+        System.out.println("Teacher changed to Student successfully");
+    }
 }
