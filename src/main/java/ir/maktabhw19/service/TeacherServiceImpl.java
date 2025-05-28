@@ -17,13 +17,20 @@ public class TeacherServiceImpl
                               ExamService examService,
                               DescriptiveQuestionService descriptiveQuestionService,
                               MultipleChoiceQuestionService multipleChoiceQuestionService,
-                              QuestionService questionService, CourseService courseService) {
+                              QuestionService questionService,
+                              CourseService courseService,
+                              StudentService studentService,
+                              AnswerToMCQService answerToMCQService,
+                              AnswerToDQService answerToDQService) {
         super(repository);
         this.examService = examService;
         this.descriptiveQuestionService = descriptiveQuestionService;
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
         this.questionService = questionService;
         this.courseService = courseService;
+        this.studentService = studentService;
+        this.answerToMCQService = answerToMCQService;
+        this.answerToDQService = answerToDQService;
     }
 
     private final ExamService examService;
@@ -31,6 +38,9 @@ public class TeacherServiceImpl
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
     private final QuestionService questionService;
     private final CourseService courseService;
+    private final StudentService studentService;
+    private final AnswerToMCQService answerToMCQService;
+    private final AnswerToDQService answerToDQService;
 
     @Override
     public Optional<Teacher> findTeacherByUserName(String userName) {
@@ -265,6 +275,38 @@ public class TeacherServiceImpl
         System.out.println("This is the list of students in this exam");
         exam.getCourse().getStudents().forEach(System.out::println);
         repository.commitTransaction();
+    }
+
+    public void calculateScoreForStudent(Long studentId, Long examId,
+                                         Long answerToDQId, Long answerToMCQId ,
+                                         Double givenScore) {
+        repository.beginTransaction();
+        if (studentService.findById(studentId).isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        if (answerToDQService.findById(answerToDQId).isEmpty()) {
+            throw new RuntimeException("Answer to DQ not found");
+        }
+        if (answerToMCQService.findById(answerToMCQId).isEmpty()) {
+            throw new RuntimeException("Answer to MCQ not found");
+        }
+        Question question = questionService.findById(answerToDQId).get();
+        Exam exam = examService.findById(examId).get();
+        if (question instanceof DescriptiveQuestion) {
+            AnswerToDQ answerToDQ = answerToDQService.findById(answerToDQId).get();
+            exam.getQuestions().stream()
+                    .forEach(question1 -> question1.getAnswers()
+                                    .forEach()
+
+               /* course.getExams().stream()
+                .filter(exam -> exam.getCourse().getTeacher().getId().equals(teacherId))
+                .toList();*/
+
+
+        }
     }
 
 }

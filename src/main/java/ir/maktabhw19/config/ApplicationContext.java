@@ -175,7 +175,10 @@ public class ApplicationContext {
                     getDescriptiveQuestionsService(),
                     getMultipleChoiceQuestionService(),
                     getQuestionService(),
-                    getCourseService());
+                    getCourseService(),
+                    getStudentService(),
+                    getAnswerToMCQService(),
+                    getAnswerToDQService());
         }
         return teacherService;
     }
