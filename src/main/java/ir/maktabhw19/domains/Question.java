@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -28,5 +30,8 @@ public class Question extends BaseEntity <Long> {
 
     @ManyToOne
     private Teacher teacher;
+
+    @OneToMany (mappedBy = "question")
+    private Set<Answer> answers;
 
 }

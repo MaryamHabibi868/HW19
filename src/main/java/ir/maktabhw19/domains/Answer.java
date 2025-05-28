@@ -4,6 +4,7 @@ import ir.maktabhw19.domains.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,4 +19,7 @@ import lombok.experimental.SuperBuilder;
 public class Answer extends BaseEntity<Long> {
 
     private Double givenScore;
+
+    @ManyToOne
+    private Question question;
 }
