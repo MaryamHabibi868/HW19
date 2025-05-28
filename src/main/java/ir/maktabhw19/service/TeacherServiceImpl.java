@@ -277,15 +277,14 @@ public class TeacherServiceImpl
         repository.commitTransaction();
     }
 
-    public void calculateScoreForStudent(Long studentId, Long examId,
+    public void calculateScoreForStudentForEveryQuestion(Long studentId, Long questionId,
                                          Long answerToDQId, Long answerToMCQId ,
                                          Double givenScore) {
-        repository.beginTransaction();
         if (studentService.findById(studentId).isEmpty()) {
             throw new RuntimeException("Student not found");
         }
-        if (examService.findById(examId).isEmpty()) {
-            throw new RuntimeException("Exam not found");
+        if (questionService.findById(questionId).isEmpty()) {
+            throw new RuntimeException("Question not found");
         }
         if (answerToDQService.findById(answerToDQId).isEmpty()) {
             throw new RuntimeException("Answer to DQ not found");
@@ -293,20 +292,33 @@ public class TeacherServiceImpl
         if (answerToMCQService.findById(answerToMCQId).isEmpty()) {
             throw new RuntimeException("Answer to MCQ not found");
         }
-        Question question = questionService.findById(answerToDQId).get();
-        Exam exam = examService.findById(examId).get();
+        Question question = questionService.findById(questionId).get();
         if (question instanceof DescriptiveQuestion) {
             AnswerToDQ answerToDQ = answerToDQService.findById(answerToDQId).get();
-            exam.getQuestions().stream()
-                    .forEach(question1 -> question1.getAnswers()
-                                    .forEach()
-
-               /* course.getExams().stream()
-                .filter(exam -> exam.getCourse().getTeacher().getId().equals(teacherId))
-                .toList();*/
-
-
+            answerToDQ.setGivenScore(givenScore);
+            answerToDQService.save(answerToDQ);
+        } else if (question instanceof MultipleChoiceQuestion) {
+            AnswerToMCQ answerToMCQ = answerToMCQService.findById(answerToMCQId).get();
+            answerToMCQ.setGivenScore(givenScore);
+            answerToMCQService.save(answerToMCQ);
         }
     }
 
+    public void calculateFinalScoreForStudentInExam(Long studentId,
+                                                    Long questionId, Long examId,
+                                                    Long answerToDQId, Long answerToMCQId ,
+                                                    Double givenScore) {
+        repository.beginTransaction();
+        Double finalScore = 0.0;
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        if (studentService.findById(studentId).isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+        Exam exam = examService.findById(examId).get();
+        exam.getQuestions().stream().forEach(question ->
+                calculateScoreForStudentForEveryQuestion(studentId, questionId, answerToDQId, answerToMCQId,
+                        givenScore));
+    }
 }
