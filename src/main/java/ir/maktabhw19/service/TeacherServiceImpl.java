@@ -253,4 +253,17 @@ public class TeacherServiceImpl
         repository.commitTransaction();
     }
 
+    public void printAllStudentInExamByExamId(Long examId) {
+        repository.beginTransaction();
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        Exam exam = examService.findById(examId).get();
+        System.out.println("This is the number of students in this exam");
+        System.out.println(exam.getCourse().getStudents().size());
+        System.out.println("This is the list of students in this exam");
+        exam.getCourse().getStudents().forEach(System.out::println);
+        repository.commitTransaction();
+    }
+
 }

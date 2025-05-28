@@ -193,7 +193,7 @@ public class Main {
                         System.out.println("Please enter your PASSWORD");
                         String password = scanner.next();
                         teacherService.loginTeacher(userName, password);
-                       /* Teacher teacher = teacherService.findTeacherByUserName(userName).get();*/
+                        /* Teacher teacher = teacherService.findTeacherByUserName(userName).get();*/
                         break;
 
                     case 2:
@@ -379,13 +379,13 @@ public class Main {
                                 studentService.participateInExamByStudent(id1, id2);
                                 break;
 
-                                case 2:
-                                    System.out.println("Please enter your ID");
-                                    Long id3 = scanner.nextLong();
-                                    System.out.println("Please enter the ID of course");
-                                    Long id4 = scanner.nextLong();
-                                    studentService.printAllExamsForStudentByCourseId(id3, id4);
-                                    break;
+                            case 2:
+                                System.out.println("Please enter your ID");
+                                Long id3 = scanner.nextLong();
+                                System.out.println("Please enter the ID of course");
+                                Long id4 = scanner.nextLong();
+                                studentService.printAllExamsForStudentByCourseId(id3, id4);
+                                break;
                         }
                 }
         }
