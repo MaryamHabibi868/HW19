@@ -9,6 +9,7 @@ import ir.maktabhw19.service.base.BaseService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ManagerService
         extends BaseService<Manager, Long> {
@@ -45,4 +46,6 @@ public interface ManagerService
     void removeTeacherFromCourse(Long courseId, Long teacherId);
 
     void printUsersByCourseID(Long courseId);
+
+    Optional<Manager> findManagerByUserName(String userName);
 }

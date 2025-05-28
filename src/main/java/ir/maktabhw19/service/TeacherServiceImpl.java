@@ -253,6 +253,7 @@ public class TeacherServiceImpl
         repository.commitTransaction();
     }
 
+    @Override
     public void printAllStudentInExamByExamId(Long examId) {
         repository.beginTransaction();
         if (examService.findById(examId).isEmpty()) {

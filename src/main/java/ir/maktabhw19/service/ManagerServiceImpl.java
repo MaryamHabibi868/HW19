@@ -29,6 +29,14 @@ public class ManagerServiceImpl
 
 
     @Override
+    public Optional<Manager> findManagerByUserName(String userName) {
+        if (repository.findByUsername(userName).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        return repository.findByUsername(userName);
+    }
+
+    @Override
     public void registerManager(String firstName, String lastName,
                                 String userName, String password) {
         repository.beginTransaction();
