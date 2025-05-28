@@ -2,6 +2,7 @@ package ir.maktabhw19;
 
 
 import ir.maktabhw19.config.ApplicationContext;
+import ir.maktabhw19.domains.Teacher;
 import ir.maktabhw19.service.ManagerService;
 import ir.maktabhw19.service.StudentService;
 import ir.maktabhw19.service.TeacherService;
@@ -192,6 +193,7 @@ public class Main {
                         System.out.println("Please enter your PASSWORD");
                         String password = scanner.next();
                         teacherService.loginTeacher(userName, password);
+                       /* Teacher teacher = teacherService.findTeacherByUserName(userName).get();*/
                         break;
 
                     case 2:
@@ -216,7 +218,8 @@ public class Main {
                                 6) Print All Courses
                                 7) Print All the Exams in the Course
                                 8) Print All the Exams you had run
-                                9) Remove the Exam""");
+                                9) Remove the Exam
+                                10) Print All the Questions in the Course""");
                         Integer teacherChoice2 = scanner.nextInt();
                         switch (teacherChoice2) {
                             case 1:
@@ -320,6 +323,15 @@ public class Main {
                                 System.out.println("Please enter the ID of Exam");
                                 Long id15 = scanner.nextLong();
                                 teacherService.removeExamFromCourseByTeacherId(id14, id15);
+                                break;
+
+                            case 10:
+                                System.out.println("Please enter your ID");
+                                Long id16 = scanner.nextLong();
+                                System.out.println("Please enter the ID of Course");
+                                Long id17 = scanner.nextLong();
+                                teacherService.printAllQuestionsByTeacherId(id16, id17);
+                                break;
                         }
                 }
                 break;

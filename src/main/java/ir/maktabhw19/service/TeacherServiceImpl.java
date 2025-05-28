@@ -234,4 +234,23 @@ public class TeacherServiceImpl
         }
     }
 
+    @Override
+    public void printAllQuestionsByTeacherId(Long teacherId, Long courseId) {
+        repository.beginTransaction();
+        if (repository.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        System.out.println("This is the list of questions for this course by the teacher");
+        course.getExams().forEach(exam -> {
+            if (exam.getCourse().getTeacher().getId().equals(teacherId)) {
+                exam.getQuestions().forEach(System.out::println);
+            }
+        });
+        repository.commitTransaction();
+    }
+
 }
