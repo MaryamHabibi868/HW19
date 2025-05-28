@@ -365,7 +365,8 @@ public class Main {
 
                         System.out.println("""
                                 Enter what you would like to do
-                                1) Participate in the Exam?""");
+                                1) Participate in the Exam?
+                                2) Print All the Exams in this Course""");
 
                         Integer studentChoice1 = scanner.nextInt();
 
@@ -377,6 +378,14 @@ public class Main {
                                 Long id2 = scanner.nextLong();
                                 studentService.participateInExamByStudent(id1, id2);
                                 break;
+
+                                case 2:
+                                    System.out.println("Please enter your ID");
+                                    Long id3 = scanner.nextLong();
+                                    System.out.println("Please enter the ID of course");
+                                    Long id4 = scanner.nextLong();
+                                    studentService.printAllExamsForStudentByCourseId(id3, id4);
+                                    break;
                         }
                 }
         }

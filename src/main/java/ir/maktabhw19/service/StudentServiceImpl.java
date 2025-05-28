@@ -1,10 +1,7 @@
 package ir.maktabhw19.service;
 
 
-import ir.maktabhw19.domains.Exam;
-import ir.maktabhw19.domains.Manager;
-import ir.maktabhw19.domains.RegistrationConfirmation;
-import ir.maktabhw19.domains.Student;
+import ir.maktabhw19.domains.*;
 import ir.maktabhw19.repository.StudentRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
@@ -15,12 +12,15 @@ public class StudentServiceImpl
         implements StudentService{
 
     public StudentServiceImpl(StudentRepository repository,
-                              ExamService examService) {
+                              ExamService examService,
+                              CourseService courseService) {
         super(repository);
         this.examService = examService;
+        this.courseService = courseService;
     }
 
     private final ExamService examService;
+    private final CourseService courseService;
 
     @Override
     public Optional<Student> findStudentByUserName(String userName) {
@@ -63,6 +63,7 @@ public class StudentServiceImpl
         }
     }
 
+    @Override
     public void participateInExamByStudent(Long studentId, Long examId) {
         repository.beginTransaction();
         if (repository.findById(studentId).isEmpty()) {
@@ -74,6 +75,21 @@ public class StudentServiceImpl
         Exam exam = examService.findById(examId).get();
         examService.save(exam);
         repository.save(repository.findById(studentId).get());
+        repository.commitTransaction();
+    }
+
+    @Override
+    public void printAllExamsForStudentByCourseId(Long studentId, Long courseId) {
+        repository.beginTransaction();
+        if (repository.findById(studentId).isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        Course course = courseService.findById(courseId).get();
+        System.out.println("This is the list of all exams in this course");
+        course.getExams().forEach(System.out::println);
         repository.commitTransaction();
     }
 }

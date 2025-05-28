@@ -17,4 +17,6 @@ public interface StudentService
                          String userName, String password);
 
     void participateInExamByStudent(Long studentId, Long examId);
+
+    void printAllExamsForStudentByCourseId(Long studentId, Long courseId);
 }
