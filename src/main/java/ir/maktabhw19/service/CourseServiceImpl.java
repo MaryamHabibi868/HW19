@@ -22,8 +22,4 @@ public class CourseServiceImpl
         }
         return repository.findByTitle(title);
     }
-
-    public void addCourse(Course course) {
-        repository.save(course);
-    }
 }

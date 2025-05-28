@@ -11,4 +11,7 @@ public class AnswerServiceImpl
     public AnswerServiceImpl(AnswerRepository repository) {
         super(repository);
     }
+
+    public void calculateGivenScore(Long studentId, Long questionId,
+                                    Long answerId, Double givenScore) {}
 }

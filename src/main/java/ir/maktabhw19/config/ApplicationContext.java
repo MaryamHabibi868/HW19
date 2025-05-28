@@ -244,7 +244,8 @@ public class ApplicationContext {
             answerToDQService =
                     new AnswerToDQServiceImpl(getAnswerToDQRepository(),
                             getStudentService(),
-                            getDescriptiveQuestionsService());
+                            getDescriptiveQuestionsService(),
+                            getAnswerToDQService());
         }
         return answerToDQService;
     }
@@ -256,7 +257,8 @@ public class ApplicationContext {
             answerToMCQService =
                     new AnswerToMCQServiceImpl(getAnswerToMCQRepository(),
                             getStudentService(),
-                            getMultipleChoiceQuestionService());
+                            getMultipleChoiceQuestionService(),
+                            getAnswerToMCQService());
         }
         return answerToMCQService;
     }

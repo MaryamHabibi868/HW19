@@ -22,4 +22,7 @@ public class Answer extends BaseEntity<Long> {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private Student student;
 }
