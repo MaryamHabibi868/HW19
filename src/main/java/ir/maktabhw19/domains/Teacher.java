@@ -3,6 +3,8 @@ package ir.maktabhw19.domains;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,9 +21,9 @@ public class Teacher extends User{
     private RegistrationConfirmation registrationConfirmation = RegistrationConfirmation.PENDING;
 
     @OneToMany (mappedBy = "teacher")
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
 
     @OneToMany (mappedBy = "teacher")
-    private Set<Question> questions;
+    private Set<Question> questions = new HashSet<>();
 
 }

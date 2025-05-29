@@ -17,24 +17,24 @@ public abstract class BaseUserRepositoryImpl<T extends User>
     }
 
     @Override
-    public Optional<T> findByUsername(String username) {
+    public Optional<T> findByUserName(String userName) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(getDomainClass());
         Root<T> from = query.from(getDomainClass());
         query.select(from);
-        query.where(cb.equal(from.get("username"), username));
+        query.where(cb.equal(from.get("userName"), userName));
         return Optional.ofNullable(entityManager.createQuery(query).getSingleResult());
     }
 
     @Override
-    public Optional<T> findByUsernameAndPassword(String username, String password) {
+    public Optional<T> findByUserNameAndPassword(String userName, String password) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(getDomainClass());
         Root<T> from = query.from(getDomainClass());
         query.select(from);
         query.where(
                 cb.and(
-                        cb.equal(from.get("username"), username),
+                        cb.equal(from.get("userName"), userName),
                         cb.equal(from.get("password"), password)
                 )
         );

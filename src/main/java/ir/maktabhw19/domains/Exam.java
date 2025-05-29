@@ -21,7 +21,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 public class Exam extends BaseEntity<Long> {
 
-    private Double score;
+    private Double score = 0.0;
 
     @NotBlank (message = "Start Date of Exam should be entered")
     private LocalDateTime startDate;

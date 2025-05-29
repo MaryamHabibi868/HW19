@@ -6,8 +6,6 @@ import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TeacherServiceImpl
         extends BaseServiceImpl<Teacher, Long, TeacherRepository>
@@ -44,10 +42,10 @@ public class TeacherServiceImpl
 
     @Override
     public Optional<Teacher> findTeacherByUserName(String userName) {
-        if (repository.findByUsername(userName).isEmpty()) {
+        if (repository.findByUserName(userName).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
-        return repository.findByUsername(userName);
+        return repository.findByUserName(userName);
     }
 
 
@@ -71,7 +69,7 @@ public class TeacherServiceImpl
     public void loginTeacher(String username, String password) {
         repository.beginTransaction();
         Teacher teacher = new Teacher();
-        Optional<Teacher> foundTeacher = repository.findByUsername(username);
+        Optional<Teacher> foundTeacher = repository.findByUserName(username);
         if (foundTeacher.isPresent()) {
             if (foundTeacher.get().getPassword().equals(password)) {
                 System.out.println("Student logged in successfully");
@@ -85,7 +83,7 @@ public class TeacherServiceImpl
 
     public void addExamByTeacher(Long teacherId, LocalDateTime startDate,
                                  LocalDateTime endDate) {
-        repository.beginTransaction();
+        /*repository.beginTransaction();*/
         if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
@@ -93,27 +91,28 @@ public class TeacherServiceImpl
         exam.setStartDate(startDate);
         exam.setEndDate(endDate);
         examService.save(exam);
-        repository.commitTransaction();
+        /*repository.commitTransaction();*/
     }
 
     public void addQuestionToExamByTeacherFromBankQuestion(
             Long teacherId, Long examId, Long questionId, Double score) {
-        repository.beginTransaction();
+        /*repository.beginTransaction();*/
         if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
-        if (repository.findById(examId).isEmpty()) {
+        if (examService.findById(examId).isEmpty()) {
             throw new RuntimeException("Exam not found");
         }
-        if (repository.findById(questionId).isEmpty()) {
+        if (questionService.findById(questionId).isEmpty()) {
             throw new RuntimeException("Question not found");
         }
         Question question = questionService.findById(questionId).get();
         questionService.save(question);
         Exam exam = examService.findById(examId).get();
-        exam.setScore(exam.getScore() + score);
+        Double currentScore = exam.getScore() != null ? exam.getScore() : 0.0;
+        exam.setScore(currentScore + score);
         examService.save(exam);
-        repository.commitTransaction();
+        /*repository.commitTransaction();*/
         System.out.println("Question added successfully");
     }
 
@@ -275,6 +274,32 @@ public class TeacherServiceImpl
         System.out.println("This is the list of students in this exam");
         exam.getCourse().getStudents().forEach(System.out::println);
         repository.commitTransaction();
+    }
+    @Override
+    public void addExamToCourseByTeacherId(Long teacherId, Long courseId, Long examId) {
+        /*repository.beginTransaction();*/
+        if (repository.findById(teacherId).isEmpty()) {
+            throw new RuntimeException("Teacher not found");
+        }
+        if (courseService.findById(courseId).isEmpty()) {
+            throw new RuntimeException("Course not found");
+        }
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        if (courseService.findById(courseId).get().getTeacher().getId().equals(teacherId)) {
+            Course course = courseService.findById(courseId).get();
+            course.getExams().add(examService.findById(examId).get());
+            courseService.save(course);
+
+            Exam exam = examService.findById(examId).get();
+            exam.setCourse(course);
+            examService.save(exam);
+            /*repository.commitTransaction();*/
+        }
+        else {
+            throw new RuntimeException("You cannot add this exam because you didn't create it.");
+        }
     }
 
     public void calculateScoreForStudentForEveryQuestion(Long studentId, Long questionId,

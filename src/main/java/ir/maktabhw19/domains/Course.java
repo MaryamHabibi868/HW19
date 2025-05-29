@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -30,11 +31,11 @@ public class Course extends BaseEntity<Long> {
     private LocalDate endDate;
 
     @ManyToMany
-    private Set<Student> students;
+    private Set<Student> students = new HashSet<>();
 
     @ManyToOne
     private Teacher teacher;
 
     @OneToMany(mappedBy = "course")
-    private Set<Exam> exams;
+    private Set<Exam> exams = new HashSet<>();
 }

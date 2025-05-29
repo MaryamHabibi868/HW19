@@ -3,6 +3,8 @@ package ir.maktabhw19.domains;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,6 +21,6 @@ public class Student extends User{
     private RegistrationConfirmation registrationConfirmation = RegistrationConfirmation.PENDING;
 
     @ManyToMany
-    private Set<Course> courses;
+    private Set<Course> courses = new HashSet<>();
 
 }

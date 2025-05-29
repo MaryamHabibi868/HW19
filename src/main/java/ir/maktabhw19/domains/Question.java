@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -32,6 +33,6 @@ public class Question extends BaseEntity <Long> {
     private Teacher teacher;
 
     @OneToMany (mappedBy = "question")
-    private Set<Answer> answers;
+    private Set<Answer> answers = new HashSet<>();
 
 }

@@ -24,10 +24,10 @@ public class StudentServiceImpl
 
     @Override
     public Optional<Student> findStudentByUserName(String userName) {
-        if (repository.findByUsername(userName).isEmpty()) {
+        if (repository.findByUserName(userName).isEmpty()) {
             throw new RuntimeException("Student not found");
         }
-        return repository.findByUsername(userName);
+        return repository.findByUserName(userName);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class StudentServiceImpl
     public void loginStudent(String username, String password) {
         repository.beginTransaction();
         Student student = new Student();
-        Optional<Student> foundStudent = repository.findByUsername(username);
+        Optional<Student> foundStudent = repository.findByUserName(username);
         if (foundStudent.isPresent()) {
             if (foundStudent.get().getPassword().equals(password)) {
                 System.out.println("Student logged in successfully");

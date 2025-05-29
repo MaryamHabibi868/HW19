@@ -48,7 +48,7 @@ public abstract class SimpleJpaRepository<T extends BaseEntity<ID>, ID>
 
     @Override
     public Optional<T> findById(ID id) {
-        return Optional.ofNullable(entityManager.find(domainClass, id));
+        return Optional.ofNullable(entityManager.find(getDomainClass(), id));
     }
 
     @Override
