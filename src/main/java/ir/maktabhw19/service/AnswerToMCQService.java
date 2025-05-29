@@ -8,4 +8,7 @@ public interface AnswerToMCQService
 
     void calculateGivenScore(Long studentId, Long questionId,
                              Long answerToDQId, Double givenScore);
+
+    void answerToMCQ(Long studentId, Long questionId,
+                     Integer selectedOption);
 }

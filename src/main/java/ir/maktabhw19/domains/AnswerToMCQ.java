@@ -23,7 +23,7 @@ public class AnswerToMCQ extends Answer {
     private MultipleChoiceQuestion question;
 
     public void calculateGivenScore() {
-        if (question.getCorrectOptionIndex() != selectedOption) {
+        if (!question.getCorrectOptionIndex().equals(selectedOption)) {
             setGivenScore(0.0);
         } else {
             setGivenScore(getGivenScore());

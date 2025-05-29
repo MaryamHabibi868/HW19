@@ -24,7 +24,7 @@ public class AnswerToDQServiceImpl
     private final DescriptiveQuestionService descriptiveQuestionService;
 
     public void answerToDQ(Long studentId, Long questionId, String answer) {
-        repository.beginTransaction();
+        /*repository.beginTransaction();*/
         if (studentService.findById(studentId).isEmpty()){
             throw new RuntimeException("Student not found");
         }
@@ -34,7 +34,8 @@ public class AnswerToDQServiceImpl
         AnswerToDQ answerToDQ = new AnswerToDQ();
         answerToDQ.setAnswer(answer);
         repository.save(answerToDQ);
-        repository.commitTransaction();
+        descriptiveQuestionService.save(descriptiveQuestionService.findById(questionId).get());
+        /*repository.commitTransaction();*/
     }
 
     @Override

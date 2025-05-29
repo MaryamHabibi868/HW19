@@ -8,4 +8,6 @@ public interface AnswerToDQService
 
     void calculateGivenScore(Long studentId, Long questionId,
                              Long answerToDQId, Double givenScore);
+
+    void answerToDQ(Long studentId, Long questionId, String answer);
 }

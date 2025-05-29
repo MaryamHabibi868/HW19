@@ -28,6 +28,8 @@ public class Main {
         DescriptiveQuestionService descriptiveQuestionService = context.getDescriptiveQuestionsService();
         MultipleChoiceQuestionService multipleChoiceQuestionService = context.getMultipleChoiceQuestionService();
         ExamService examService = context.getExamService();
+        AnswerToDQService answerToDQService = context.getAnswerToDQService();
+        AnswerToMCQService answerToMCQService = context.getAnswerToMCQService();
 
         // Add Manager
         Manager manager = Manager.builder()
@@ -185,11 +187,18 @@ public class Main {
         teacherService.addExamToCourseByTeacherId(2L, 2L, 4L);
 
 
-        // Add Quetion to Exam
+        // Add Question to Exam
         teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 1L , 12.0);
         teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 2L , 15.0);
         teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 3L , 16.0);
         teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 4L , 8.5);
+
+
+        // Add Answer ToDQ
+        answerToDQService.answerToDQ(4L, 1L, "AAAAAAAAAAAAA");
+        answerToMCQService.answerToMCQ(5L, 3L, 2);
+
+
 
         System.out.println("Welcome To A project for managing the scheduling, creation, and execution of exams");
         System.out.println("""
