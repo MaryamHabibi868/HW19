@@ -11,17 +11,14 @@ public class AnswerToMCQServiceImpl
         implements AnswerToMCQService {
     public AnswerToMCQServiceImpl(AnswerToMCQRepository repository,
                                   StudentService studentService,
-                                  MultipleChoiceQuestionService multipleChoiceQuestionService,
-                                  AnswerToMCQService answerToMCQService) {
+                                  MultipleChoiceQuestionService multipleChoiceQuestionService) {
         super(repository);
         this.studentService = studentService;
         this.multipleChoiceQuestionService = multipleChoiceQuestionService;
-        this.answerToMCQService = answerToMCQService;
     }
 
     private final StudentService studentService;
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
-    private final AnswerToMCQService answerToMCQService;
 
     public void answerToMCQ(Long studentId, Long questionId,
                             Integer selectedOption) {
@@ -49,7 +46,7 @@ public class AnswerToMCQServiceImpl
         if (multipleChoiceQuestionService.findById(questionId).isEmpty()){
             throw new RuntimeException("Question not found");
         }
-        if (answerToMCQService.findById(answerToDQId).isEmpty()){
+        if (repository.findById(answerToDQId).isEmpty()){
             throw new RuntimeException("Answer not found");
         }
         AnswerToMCQ answerToMCQ = new AnswerToMCQ();

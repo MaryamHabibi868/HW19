@@ -14,17 +14,14 @@ public class AnswerToDQServiceImpl
         implements AnswerToDQService{
     public AnswerToDQServiceImpl(AnswerToDQRepository repository,
                                  StudentService studentService,
-                                 DescriptiveQuestionService descriptiveQuestionService,
-                                 AnswerToDQService answerToDQService) {
+                                 DescriptiveQuestionService descriptiveQuestionService) {
         super(repository);
         this.studentService = studentService;
         this.descriptiveQuestionService = descriptiveQuestionService;
-        this.answerToDQService = answerToDQService;
     }
 
     private final StudentService studentService;
     private final DescriptiveQuestionService descriptiveQuestionService;
-    private final AnswerToDQService answerToDQService;
 
     public void answerToDQ(Long studentId, Long questionId, String answer) {
         repository.beginTransaction();
@@ -50,7 +47,7 @@ public class AnswerToDQServiceImpl
         if (descriptiveQuestionService.findById(questionId).isEmpty()){
             throw new RuntimeException("Question not found");
         }
-        if (answerToDQService.findById(answerToDQId).isEmpty()){
+        if (repository.findById(answerToDQId).isEmpty()){
             throw new RuntimeException("Answer not found");
         }
         AnswerToDQ answerToDQ = new AnswerToDQ();
