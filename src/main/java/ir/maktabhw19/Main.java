@@ -2,19 +2,14 @@ package ir.maktabhw19;
 
 
 import ir.maktabhw19.config.ApplicationContext;
-import ir.maktabhw19.domains.Manager;
-import ir.maktabhw19.domains.Student;
-import ir.maktabhw19.domains.Teacher;
-import ir.maktabhw19.service.ManagerService;
-import ir.maktabhw19.service.StudentService;
-import ir.maktabhw19.service.TeacherService;
+import ir.maktabhw19.domains.*;
+import ir.maktabhw19.service.*;
 import jakarta.persistence.EntityManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Scanner;
 
 public class Main {
@@ -27,6 +22,94 @@ public class Main {
         ManagerService managerService = context.getManagerService();
         TeacherService teacherService = context.getTeacherService();
         StudentService studentService = context.getStudentService();
+        CourseService courseService = context.getCourseService();
+        QuestionService questionService = context.getQuestionService();
+        DescriptiveQuestionService descriptiveQuestionService = context.getDescriptiveQuestionsService();
+        MultipleChoiceQuestionService multipleChoiceQuestionService = context.getMultipleChoiceQuestionService();
+
+        Manager manager = Manager.builder()
+                .firstName("Ali")
+                .lastName("Habibi")
+                .userName("alihabibi")
+                .password("123")
+                .build();
+        managerService.save(manager);
+
+        Teacher teacher = Teacher.builder()
+                .firstName("Maryam")
+                .lastName("Sadidi")
+                .userName("maryamsadidi")
+                .password("12345")
+                .build();
+        Teacher teacher1 = Teacher.builder()
+                .firstName("Mohamad")
+                .lastName("Zaki")
+                .userName("mohamadzaki")
+                .password("987")
+                .build();
+        teacherService.save(teacher);
+        teacherService.save(teacher1);
+
+        Student student = Student.builder()
+                .firstName("Yasna")
+                .lastName("Hoseini")
+                .userName("yasnahoseini")
+                .password("7654")
+                .build();
+        Student student1 = Student.builder()
+                .firstName("Salma")
+                .lastName("Ashrafi")
+                .userName("salmaashrafi")
+                .password("76543")
+                .build();
+        Student student2 = Student.builder()
+                .firstName("Helma")
+                .lastName("Shojaei")
+                .userName("helmashojaei")
+                .password("65443")
+                .build();
+        studentService.save(student);
+        studentService.save(student1);
+        studentService.save(student2);
+
+        Course course = Course.builder()
+                .title("Math")
+                .startDate(LocalDate.parse("2025-01-01"))
+                .endDate(LocalDate.parse("2025-06-20"))
+                .build();
+        Course course1 = Course.builder()
+                .title("Physics")
+                .startDate(LocalDate.parse("2025-02-01"))
+                .endDate(LocalDate.parse("2025-07-20"))
+                .build();
+        courseService.save(course);
+        courseService.save(course1);
+
+        Question question = DescriptiveQuestion.builder()
+                .questionTitle("Add Number")
+                .questionStatement("Add 2+5?")
+                .build();
+        Question question1 = MultipleChoiceQuestion.builder()
+                .questionTitle("Average")
+                .questionStatement("Find average between 10 and 20")
+                .options(List.of("11" , "20" , "15"))
+                .correctOptionIndex(2)
+                .build();
+        Question question2 = DescriptiveQuestion.builder()
+                .questionTitle("Speed")
+                .questionStatement("Explain the speed of motorcycle in the street")
+                .build();
+        Question question3 = MultipleChoiceQuestion.builder()
+                .questionTitle("Pressure")
+                .questionStatement("Find the pressure in 20 meters in the sea")
+                .options(List.of("6" , "700" , "65"))
+                .correctOptionIndex(1)
+                .build();
+        questionService.save(question);
+        questionService.save(question1);
+        questionService.save(question2);
+        questionService.save(question3);
+
 
         System.out.println("Welcome To A project for managing the scheduling, creation, and execution of exams");
         System.out.println("""
