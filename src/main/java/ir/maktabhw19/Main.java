@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +27,9 @@ public class Main {
         QuestionService questionService = context.getQuestionService();
         DescriptiveQuestionService descriptiveQuestionService = context.getDescriptiveQuestionsService();
         MultipleChoiceQuestionService multipleChoiceQuestionService = context.getMultipleChoiceQuestionService();
+        ExamService examService = context.getExamService();
 
+        // Add Manager
         Manager manager = Manager.builder()
                 .firstName("Ali")
                 .lastName("Habibi")
@@ -35,81 +38,158 @@ public class Main {
                 .build();
         managerService.save(manager);
 
+
+        //Add teacher
         Teacher teacher = Teacher.builder()
                 .firstName("Maryam")
                 .lastName("Sadidi")
                 .userName("maryamsadidi")
                 .password("12345")
+                .registrationConfirmation(RegistrationConfirmation.PENDING)
                 .build();
         Teacher teacher1 = Teacher.builder()
                 .firstName("Mohamad")
                 .lastName("Zaki")
                 .userName("mohamadzaki")
                 .password("987")
+                .registrationConfirmation(RegistrationConfirmation.PENDING)
                 .build();
         teacherService.save(teacher);
         teacherService.save(teacher1);
 
+
+        // Add Student
         Student student = Student.builder()
                 .firstName("Yasna")
                 .lastName("Hoseini")
                 .userName("yasnahoseini")
                 .password("7654")
+                .registrationConfirmation(RegistrationConfirmation.PENDING)
                 .build();
         Student student1 = Student.builder()
                 .firstName("Salma")
                 .lastName("Ashrafi")
                 .userName("salmaashrafi")
                 .password("76543")
+                .registrationConfirmation(RegistrationConfirmation.PENDING)
                 .build();
         Student student2 = Student.builder()
                 .firstName("Helma")
                 .lastName("Shojaei")
                 .userName("helmashojaei")
                 .password("65443")
+                .registrationConfirmation(RegistrationConfirmation.PENDING)
                 .build();
         studentService.save(student);
         studentService.save(student1);
         studentService.save(student2);
 
+
+        // Add Course
         Course course = Course.builder()
                 .title("Math")
                 .startDate(LocalDate.parse("2025-01-01"))
                 .endDate(LocalDate.parse("2025-06-20"))
+                .students(new HashSet<>())
+                .exams(new HashSet<>())
                 .build();
         Course course1 = Course.builder()
                 .title("Physics")
                 .startDate(LocalDate.parse("2025-02-01"))
                 .endDate(LocalDate.parse("2025-07-20"))
+                .students(new HashSet<>())
+                .exams(new HashSet<>())
                 .build();
         courseService.save(course);
         courseService.save(course1);
 
-        Question question = DescriptiveQuestion.builder()
+
+        // Add Descriptive Question
+        DescriptiveQuestion question = DescriptiveQuestion.builder()
                 .questionTitle("Add Number")
                 .questionStatement("Add 2+5?")
                 .build();
-        Question question1 = MultipleChoiceQuestion.builder()
-                .questionTitle("Average")
-                .questionStatement("Find average between 10 and 20")
-                .options(List.of("11" , "20" , "15"))
-                .correctOptionIndex(2)
-                .build();
-        Question question2 = DescriptiveQuestion.builder()
+        DescriptiveQuestion question2 = DescriptiveQuestion.builder()
                 .questionTitle("Speed")
                 .questionStatement("Explain the speed of motorcycle in the street")
                 .build();
-        Question question3 = MultipleChoiceQuestion.builder()
+        descriptiveQuestionService.save(question);
+        descriptiveQuestionService.save(question2);
+
+
+        // Add Multiple Choice Question
+        MultipleChoiceQuestion question1 = MultipleChoiceQuestion.builder()
+                .questionTitle("Average")
+                .questionStatement("Find average between 10 and 20")
+                .options(List.of("11", "20", "15"))
+                .correctOptionIndex(2)
+                .build();
+        MultipleChoiceQuestion question3 = MultipleChoiceQuestion.builder()
                 .questionTitle("Pressure")
                 .questionStatement("Find the pressure in 20 meters in the sea")
-                .options(List.of("6" , "700" , "65"))
+                .options(List.of("6", "700", "65"))
                 .correctOptionIndex(1)
                 .build();
-        questionService.save(question);
-        questionService.save(question1);
-        questionService.save(question2);
-        questionService.save(question3);
 
+        multipleChoiceQuestionService.save(question1);
+        multipleChoiceQuestionService.save(question3);
+
+
+        // Add Exam
+        Exam exam = Exam.builder()
+                .startDate(LocalDateTime.of(2025, 5, 3, 14, 30))
+                .endDate(LocalDateTime.of(2025, 5, 3, 16, 30))
+                .build();
+        Exam exam1 = Exam.builder()
+                .startDate(LocalDateTime.of(2025, 2, 10, 9, 0))
+                .endDate(LocalDateTime.of(2025, 2, 10, 12, 0))
+                .build();
+        examService.save(exam);
+        examService.save(exam1);
+
+
+        // Prove Registration for teachers
+        managerService.proofRegisteredTeacher("maryamsadidi");
+        managerService.proofRegisteredTeacher("mohamadzaki");
+
+
+        // Prove Registration for student
+        managerService.proofRegisteredStudent("yasnahoseini");
+        managerService.proofRegisteredStudent("salmaashrafi");
+        managerService.proofRegisteredStudent("helmashojaei");
+
+
+        //Add teacher to Course
+        managerService.addTeacherToCourse(1L, 3L);
+        managerService.addTeacherToCourse(2L, 2L);
+
+
+        //Add student to Course
+        managerService.addStudentToCourse(4L, 1L);
+        managerService.addStudentToCourse(5L, 1L);
+        managerService.addStudentToCourse(6L, 2L);
+
+        // Add exam by teacher
+        teacherService.addExamByTeacher(2L,
+                LocalDateTime.of(2025, 4, 10, 13, 40),
+                LocalDateTime.of(2025, 4, 10, 15, 30));
+        teacherService.addExamByTeacher(3L,
+                LocalDateTime.of(2025, 6, 8, 10, 15),
+                LocalDateTime.of(2025, 6, 8, 11, 45));
+
+
+        // Add exam to course
+        teacherService.addExamToCourseByTeacherId(3L, 1L, 1L);
+        teacherService.addExamToCourseByTeacherId(3L, 1L, 3L);
+        teacherService.addExamToCourseByTeacherId(2L, 2L, 2L);
+        teacherService.addExamToCourseByTeacherId(2L, 2L, 4L);
+
+
+        // Add Quetion to Exam
+        teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 1L , 12.0);
+        teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 2L , 15.0);
+        teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 3L , 16.0);
+        teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 4L , 8.5);
 
         System.out.println("Welcome To A project for managing the scheduling, creation, and execution of exams");
         System.out.println("""
