@@ -6,6 +6,7 @@ import ir.maktabhw19.repository.StudentRepository;
 import ir.maktabhw19.service.base.BaseServiceImpl;
 
 import java.util.Optional;
+import java.util.Set;
 
 public class StudentServiceImpl
         extends BaseServiceImpl<Student, Long, StudentRepository>
@@ -91,5 +92,31 @@ public class StudentServiceImpl
         System.out.println("This is the list of all exams in this course");
         course.getExams().forEach(System.out::println);
         repository.commitTransaction();
+    }
+
+
+    public void runExam(Long studentId, Long examId) {
+        repository.beginTransaction();
+        if (repository.findById(studentId).isEmpty()) {
+            throw new RuntimeException("Student not found");
+        }
+        if (examService.findById(examId).isEmpty()) {
+            throw new RuntimeException("Exam not found");
+        }
+        Exam exam = examService.findById(examId).get();
+        Set<Question> questions = exam.getQuestions();
+        for (int i = 0; i < questions.size(); i++) {
+            System.out.println(questions);
+            if (questions instanceof MultipleChoiceQuestion) {
+                System.out.println(((MultipleChoiceQuestion) questions).getOptions().get(0));
+                System.out.println("Enter your answer");
+                AnswerToMCQ answerToMCQ = new AnswerToMCQ();
+                answerToMCQ.setQuestion(questions.iterator().next());
+            } else if (questions instanceof DescriptiveQuestion){
+                System.out.println("Enter your answer");
+                AnswerToDQ answerToDQ = new AnswerToDQ();
+                answerToDQ.setQuestion(questions.iterator().next());
+            }
+        }
     }
 }
