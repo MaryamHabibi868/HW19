@@ -36,14 +36,16 @@ public class AnswerToMCQServiceImpl
         if(examService.findById(examId).isEmpty()){
             throw new RuntimeException("Exam not found");
         }
-        if (!examService.findById(examId).get().getQuestions().contains(multipleChoiceQuestionService.findById(questionId).get())) {
+        /*if (!examService.findById(examId).get().getQuestions().contains(multipleChoiceQuestionService.findById(questionId).get())) {
             throw new RuntimeException("This question is not part of the selected exam.");
-        }
+        }*/
         AnswerToMCQ answerToMCQ = new AnswerToMCQ();
         answerToMCQ.setStudent(studentService.findById(studentId).get());
         answerToMCQ.setQuestion(multipleChoiceQuestionService.findById(questionId).get());
         answerToMCQ.setSelectedOption(selectedOption);
         answerToMCQ.calculateGivenScore();
+        answerToMCQ.setQuestion(multipleChoiceQuestionService.findById(questionId).get());
+        answerToMCQ.setStudent(studentService.findById(studentId).get());
         repository.save(answerToMCQ);
         multipleChoiceQuestionService.save(multipleChoiceQuestionService.findById(questionId).get());
         repository.commitTransaction();

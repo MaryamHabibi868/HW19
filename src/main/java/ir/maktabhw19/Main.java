@@ -191,7 +191,7 @@ public class Main {
         teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 1L , 12.0);
         teacherService.addQuestionToExamByTeacherFromBankQuestion(2L, 2L, 2L , 15.0);
         teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 3L , 16.0);
-        teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 4L , 8.5);
+        teacherService.addQuestionToExamByTeacherFromBankQuestion(3L, 3L, 3L , 8.5);
 
 
         // Add Answer ToDQ

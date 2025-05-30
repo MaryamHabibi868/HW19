@@ -134,10 +134,10 @@ public class TeacherServiceImpl
         Question question = new Question();
         question.setQuestionTitle(title);
         question.setQuestionStatement(statement);
-        questionService.save(question);
         Exam exam = examService.findById(examId).get();
         exam.setScore(exam.getScore() + score);
         examService.save(exam);
+        questionService.save(question);
         repository.commitTransaction();
         System.out.println("Descriptive Question added successfully");
     }

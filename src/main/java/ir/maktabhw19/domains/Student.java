@@ -23,4 +23,7 @@ public class Student extends User{
     @ManyToMany
     private Set<Course> courses = new HashSet<>();
 
+    @OneToOne
+    private Answer answer;
+
 }
