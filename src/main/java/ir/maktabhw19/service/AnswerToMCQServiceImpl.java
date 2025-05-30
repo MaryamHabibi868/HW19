@@ -43,8 +43,6 @@ public class AnswerToMCQServiceImpl
         answerToMCQ.setStudent(studentService.findById(studentId).get());
         answerToMCQ.setQuestion(multipleChoiceQuestionService.findById(questionId).get());
         answerToMCQ.setSelectedOption(selectedOption);
-        answerToMCQ.setQuestion(multipleChoiceQuestionService.findById(questionId).get());
-        answerToMCQ.setStudent(studentService.findById(studentId).get());
         answerToMCQ.calculateGivenScore();
         repository.save(answerToMCQ);
         multipleChoiceQuestionService.save(multipleChoiceQuestionService.findById(questionId).get());
