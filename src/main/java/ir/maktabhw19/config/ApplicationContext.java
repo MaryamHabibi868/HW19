@@ -260,7 +260,8 @@ public class ApplicationContext {
             answerToMCQService =
                     new AnswerToMCQServiceImpl(getAnswerToMCQRepository(),
                             getStudentService(),
-                            getMultipleChoiceQuestionService()
+                            getMultipleChoiceQuestionService(),
+                            getExamService()
                            );
         }
         return answerToMCQService;

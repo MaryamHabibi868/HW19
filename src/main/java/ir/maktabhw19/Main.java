@@ -196,7 +196,7 @@ public class Main {
 
         // Add Answer ToDQ
         answerToDQService.answerToDQ(4L, 1L, "AAAAAAAAAAAAA");
-        answerToMCQService.answerToMCQ(5L, 3L, 2);
+        answerToMCQService.answerToMCQ(5L, 3L, 3L,2 );
 
 
 

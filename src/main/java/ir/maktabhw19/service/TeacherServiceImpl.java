@@ -106,9 +106,12 @@ public class TeacherServiceImpl
         if (questionService.findById(questionId).isEmpty()) {
             throw new RuntimeException("Question not found");
         }
+        Teacher teacher = repository.findById(teacherId).get();
         Question question = questionService.findById(questionId).get();
         questionService.save(question);
         Exam exam = examService.findById(examId).get();
+        question.setExam(exam);
+        question.setTeacher(teacher);
         Double currentScore = exam.getScore() != null ? exam.getScore() : 0.0;
         exam.setScore(currentScore + score);
         examService.save(exam);

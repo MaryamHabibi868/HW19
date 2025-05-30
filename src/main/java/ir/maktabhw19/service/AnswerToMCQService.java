@@ -9,6 +9,6 @@ public interface AnswerToMCQService
     void calculateGivenScore(Long studentId, Long questionId,
                              Long answerToDQId, Double givenScore);
 
-    void answerToMCQ(Long studentId, Long questionId,
+    void answerToMCQ(Long studentId, Long examId, Long questionId,
                      Integer selectedOption);
 }
