@@ -23,6 +23,7 @@ public class AnswerToDQServiceImpl
     private final StudentService studentService;
     private final DescriptiveQuestionService descriptiveQuestionService;
 
+    @Override
     public void answerToDQ(Long studentId, Long questionId, String answer) {
         repository.beginTransaction();
         if (studentService.findById(studentId).isEmpty()){

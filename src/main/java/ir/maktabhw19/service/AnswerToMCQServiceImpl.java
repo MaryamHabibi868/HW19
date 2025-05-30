@@ -20,6 +20,7 @@ public class AnswerToMCQServiceImpl
     private final StudentService studentService;
     private final MultipleChoiceQuestionService multipleChoiceQuestionService;
 
+    @Override
     public void answerToMCQ(Long studentId, Long questionId,
                             Integer selectedOption) {
         repository.beginTransaction();
