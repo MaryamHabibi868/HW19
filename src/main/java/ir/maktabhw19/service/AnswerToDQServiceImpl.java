@@ -34,6 +34,8 @@ public class AnswerToDQServiceImpl
         }
         AnswerToDQ answerToDQ = new AnswerToDQ();
         answerToDQ.setAnswer(answer);
+        answerToDQ.setStudent(studentService.findById(studentId).get());
+        answerToDQ.setQuestion(descriptiveQuestionService.findById(questionId).get());
         repository.save(answerToDQ);
         descriptiveQuestionService.save(descriptiveQuestionService.findById(questionId).get());
         repository.commitTransaction();
