@@ -69,14 +69,14 @@ public class ManagerServiceImpl
 
     @Override
     public void proofRegisteredTeacher(String userName) {
-      /*  repository.beginTransaction();*/
+        repository.beginTransaction();
         Optional<Teacher> foundTeacher = teacherService.findTeacherByUserName(userName);
         if (foundTeacher.isPresent()) {
             Teacher teacher = foundTeacher.get();
             if (teacher.getRegistrationConfirmation() == RegistrationConfirmation.PENDING) {
                 teacher.setRegistrationConfirmation(RegistrationConfirmation.APPROVED);
                 teacherService.save(teacher);
-                /*repository.commitTransaction();*/
+                repository.commitTransaction();
                 System.out.println("Teacher registration APPROVED by manager successfully");
             } else {
                 System.out.println("Teacher registration has already been approved");
@@ -86,14 +86,14 @@ public class ManagerServiceImpl
 
     @Override
     public void proofRegisteredStudent(String userName) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         Optional<Student> foundStudent = studentService.findStudentByUserName(userName);
         if (foundStudent.isPresent()) {
             Student student = foundStudent.get();
             if (student.getRegistrationConfirmation() == RegistrationConfirmation.PENDING) {
                 student.setRegistrationConfirmation(RegistrationConfirmation.APPROVED);
                 studentService.save(student);
-                /*repository.commitTransaction();*/
+                repository.commitTransaction();
                 System.out.println("Student registration APPROVED by manager successfully");
             } else {
                 System.out.println("Student registration has already been approved");
@@ -169,7 +169,7 @@ public class ManagerServiceImpl
 
     @Override
     public void addTeacherToCourse(Long courseId, Long teacherId) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         if (courseService.findById(courseId).isEmpty()) {
             throw new RuntimeException("CourseId " + courseId + " not found");
         }
@@ -180,7 +180,7 @@ public class ManagerServiceImpl
         course.setTeacher(teacherService.findById(teacherId).get());
         courseService.save(course);
         teacherService.save(teacherService.findById(teacherId).get());
-        /*repository.commitTransaction();*/
+        repository.commitTransaction();
         System.out.println("Teacher added to this course " + courseId + " successfully");
     }
 
@@ -203,7 +203,7 @@ public class ManagerServiceImpl
 
     @Override
     public void addStudentToCourse(Long studentId, Long courseId) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         if (courseService.findById(courseId).isEmpty()) {
             throw new RuntimeException("CourseId " + courseId + " not found");
         }
@@ -214,7 +214,7 @@ public class ManagerServiceImpl
         course.getStudents().add(studentService.findById(studentId).get());
         courseService.save(course);
         studentService.save(studentService.findById(studentId).get());
-        /*repository.commitTransaction();*/
+        repository.commitTransaction();
         System.out.println("Student added to this course " + courseId + " successfully");
     }
 

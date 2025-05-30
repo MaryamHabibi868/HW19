@@ -22,7 +22,7 @@ public class AnswerToMCQServiceImpl
 
     public void answerToMCQ(Long studentId, Long questionId,
                             Integer selectedOption) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         if (studentService.findById(studentId).isEmpty()){
             throw new RuntimeException("Student not found");
         }
@@ -36,7 +36,7 @@ public class AnswerToMCQServiceImpl
         answerToMCQ.calculateGivenScore();
         repository.save(answerToMCQ);
         multipleChoiceQuestionService.save(multipleChoiceQuestionService.findById(questionId).get());
-        /*repository.commitTransaction();*/
+        repository.commitTransaction();
     }
 
     @Override

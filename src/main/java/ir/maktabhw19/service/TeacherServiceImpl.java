@@ -96,7 +96,7 @@ public class TeacherServiceImpl
 
     public void addQuestionToExamByTeacherFromBankQuestion(
             Long teacherId, Long examId, Long questionId, Double score) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
@@ -112,7 +112,7 @@ public class TeacherServiceImpl
         Double currentScore = exam.getScore() != null ? exam.getScore() : 0.0;
         exam.setScore(currentScore + score);
         examService.save(exam);
-        /*repository.commitTransaction();*/
+        repository.commitTransaction();
         System.out.println("Question added successfully");
     }
 
@@ -277,7 +277,7 @@ public class TeacherServiceImpl
     }
     @Override
     public void addExamToCourseByTeacherId(Long teacherId, Long courseId, Long examId) {
-        /*repository.beginTransaction();*/
+        repository.beginTransaction();
         if (repository.findById(teacherId).isEmpty()) {
             throw new RuntimeException("Teacher not found");
         }
@@ -295,7 +295,7 @@ public class TeacherServiceImpl
             Exam exam = examService.findById(examId).get();
             exam.setCourse(course);
             examService.save(exam);
-            /*repository.commitTransaction();*/
+            repository.commitTransaction();
         }
         else {
             throw new RuntimeException("You cannot add this exam because you didn't create it.");
@@ -342,7 +342,9 @@ public class TeacherServiceImpl
             throw new RuntimeException("Student not found");
         }
         Exam exam = examService.findById(examId).get();
-        exam.getQuestions().stream().forEach(question ->
+        Question question = questionService.findById(questionId).get();
+        exam.setQuestions((Set<Question>) question);
+        exam.getQuestions().stream().forEach(q ->
                 calculateScoreForStudentForEveryQuestion(studentId, questionId, answerToDQId, answerToMCQId,
                         givenScore));
     }
